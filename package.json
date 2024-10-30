@@ -1,37 +1,53 @@
 {
-  "name": "Project Name",
+  "name": "Pixel Image",
   "version": "1.0.0",
   "description": "Description of the project",
+  "main": "server.js",
+  "type": "module",
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.prod.js",
+    "build": "webpack --config webpack.prod.cjs",
     "watch": "webpack --watch",
-    "start": "webpack serve --open --config webpack.dev.js",
+    "start:frontend": "webpack serve --open --config webpack.dev.cjs",
+    "start:backend": "nodemon src/server/server.js",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "prod": "node src/server/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "format": "npx prettier --write **/*.{js,jsx,md}",
+    "format:check": "npx prettier --check **/*.{js,jsx,md}",
     "gh-deploy": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages",
     "gh-deploy-init": "git push origin && git subtree push --prefix dist origin gh-pages"
   },
   "repository": {
     "type": "git",
-    "url": "github.com/ideen-los/restaurant-page"
+    "url": "github.com/ideen-los/pixel-image"
   },
   "author": "ideen-los",
   "license": "ISC",
   "devDependencies": {
     "compression-webpack-plugin": "^11.1.0",
+    "concurrently": "^9.0.1",
     "css-loader": "^6.10.0",
     "css-minimizer-webpack-plugin": "^7.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "html-webpack-plugin": "^5.6.0",
     "mini-css-extract-plugin": "^2.9.1",
+    "nodemon": "^3.1.7",
     "sass": "^1.70.0",
     "sass-loader": "^14.1.0",
     "style-loader": "^3.3.4",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1",
     "webpack-merge": "^6.0.1"
+  },
+  "dependencies": {
+    "@paypal/paypal-server-sdk": "^0.5.1",
+    "axios": "^1.7.7",
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1"
   }
 }
