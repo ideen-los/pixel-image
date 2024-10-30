@@ -6,6 +6,15 @@ module.exports = merge(common, {
   devtool: 'inline-source-map',
   devServer: {
     static: './dist',
+    compress: true,
+    port: 8080,
+    open: true,
+    proxy: {
+      '/pay': 'http://localhost:3000',
+      '/complete-order': 'http://localhost:3000',
+      '/cancel-order': 'http://localhost:3000',
+      // Add other API routes as needed
+    },
   },
   module: {
     rules: [
