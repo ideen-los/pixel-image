@@ -1,40 +1,23 @@
 import axios from 'axios';
 
+/* Creates a Paypal Access Token */
 export const generateAccessToken = async () => {
-  const clientId = process.env.PAYPAL_CLIENT_ID;
-  const secret = process.env.PAYPAL_SECRET;
-  const auth = Buffer.from(`${clientId}:${secret}`).toString('base64');
+  const response = await axios({
+    url: process.env.PAYPAL_BASE_URL + '/v1/oauth2/token',
+    method: 'post',
+    data: 'grant_type=client_credentials',
+    auth: {
+      username: process.env.PAYPAL_CLIENT_ID,
+      password: process.env.PAYPAL_CLIENT_SECRET,
+    },
+  });
 
-  try {
-    const response = await axios({
-      url: `${process.env.PAYPAL_BASE_URL}/v1/oauth2/token`,
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${auth}`,
-      },
-      data: 'grant_type=client_credentials',
-    });
-
-    const accessToken = response.data.access_token;
-    console.log('Access Token Generated:', accessToken); // For debugging
-    return accessToken;
-  } catch (error) {
-    if (error.response) {
-      console.error('Error generating access token:', error.response.data);
-    } else if (error.request) {
-      console.error(
-        'No response received while generating access token:',
-        error.request
-      );
-    } else {
-      console.error('Error setting up access token request:', error.message);
-    }
-    throw error;
-  }
+  console.log(response.data);
+  return response.data.access_token;
 };
 
-export const createOrder = async function () {
+/* Creates a Paypal Order */
+export const createOrder = async function (amount) {
   const accessToken = await generateAccessToken();
 
   const response = await axios({
@@ -55,18 +38,18 @@ export const createOrder = async function () {
               quantity: '1',
               unit_amount: {
                 currency_code: 'EUR',
-                value: '1',
+                value: amount,
               },
             },
           ],
 
           amount: {
             currency_code: 'EUR',
-            value: '1',
+            value: amount,
             breakdown: {
               item_total: {
                 currency_code: 'EUR',
-                value: '1',
+                value: amount,
               },
             },
           },
@@ -75,17 +58,22 @@ export const createOrder = async function () {
 
       application_context: {
         brand_name: 'PRO EQUIS e.V.',
-        return_url: process.env.BASE_URL + '/complete-order',
-        cancel_url: process.env.BASE_URL + '/cancel-order',
+        return_url: process.env.BASE_URL + '/complete',
+        cancel_url: process.env.BASE_URL + '/cancel',
         shipping_preference: 'NO_SHIPPING',
         user_action: 'PAY_NOW',
       },
     },
   });
 
-  return response.data.links.find((link) => link.rel === 'approve').href;
+  console.log('CreateOrder data:', response.data);
+  return {
+    url: response.data.links.find((link) => link.rel === 'approve').href,
+    id: response.data.id,
+  };
 };
 
+/* Captures a created order (transfers payment to merchant account) */
 export const capturePayment = async function (orderId) {
   try {
     const accessToken = await generateAccessToken();
@@ -101,7 +89,6 @@ export const capturePayment = async function (orderId) {
       },
     });
 
-    console.log('Capture Payment Response:', response.data);
     return response.data;
   } catch (error) {
     if (error.response) {
