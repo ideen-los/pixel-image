@@ -1,0 +1,66 @@
+import { createSession, stripe } from '../services/stripe.js';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+// Creates a Stripe session
+export const createStripeSession = async (req, res) => {
+  try {
+    const name = req.body.name; // name of the donor
+    const amount = parseFloat(req.body.amount); // Convert the donation amount to a number
+    const positiveAmount = Math.abs(amount); // If the value is negative, convert it to positive
+    const truncatedAmount = Math.trunc(positiveAmount); // If the value is a decimal, truncate it
+    console.log('req.body:', req.body);
+    console.log(truncatedAmount);
+
+    if (!truncatedAmount || truncatedAmount == 0 || truncatedAmount == '') {
+      res.redirect('/');
+      return;
+    } else {
+      const session = await createSession(truncatedAmount);
+      const url = session.url;
+      const id = session.id;
+
+      if (!url) {
+        throw new Error('Approval URL not found');
+      }
+      res.redirect(url);
+    }
+  } catch (error) {
+    console.error('Error in /pay route:', error);
+    res
+      .status(500)
+      .send(
+        'An error occurred while processing your payment. Please try again later.'
+      );
+  }
+};
+
+// Captures a Stripe payment
+export const retrieveStripePayment = async (req, res) => {
+  const sessionId = req.query.session_id;
+
+  if (!sessionId) {
+    return res.status(400).send('Session ID is missing.');
+  }
+
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId);
+
+    console.log('Session data: ', session);
+
+    // Check the payment status
+    if (session.payment_status === 'paid') {
+      // Payment was successful
+      // You can perform additional actions here, like updating your database
+
+      res.send('Payment successful! Thank you for your purchase.');
+    } else {
+      // Payment not completed
+      res.send('Payment not completed. Please try again.');
+    }
+  } catch (error) {
+    console.error('Error retrieving Stripe session:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};

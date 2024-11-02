@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>fgdfg</title>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
-  <body>
+  <body id="home">
     <h1>Eulenmühle Spende</h1>
-    <form action="/pay" method="post">
+    <canvas id="imageCanvas" width="1333" height="750"></canvas>
+    <form id="donationForm" method="post">
       <input
         type="text"
         name="name"
@@ -20,7 +22,37 @@
         id="donationAmount"
         placeholder="Betrag in EUR"
         required />
-      <input type="submit" value="Spenden" />
+      <button
+        type="submit"
+        name="paymentMethod"
+        value="paypal"
+        id="paypalButton">
+        PayPal
+      </button>
+      <button
+        type="submit"
+        name="paymentMethod"
+        value="stripe"
+        id="stripeButton">
+        Stripe
+      </button>
     </form>
+    <canvas id="offscreenCanvas" width="1333" height="750"></canvas>
+
+    <script src="/js/revealPixels.js"></script>
+    <script>
+      const form = document.getElementById('donationForm');
+
+      form.addEventListener('submit', (e) => {
+        const paymentMethod = e.submitter.value;
+
+        if (paymentMethod === 'paypal') {
+          form.action = '/pay-paypal';
+        }
+        if (paymentMethod === 'stripe') {
+          form.action = '/pay-stripe';
+        }
+      });
+    </script>
   </body>
 </html>

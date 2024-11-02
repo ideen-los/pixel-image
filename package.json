@@ -6,19 +6,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config webpack.prod.cjs",
-    "watch": "webpack --watch",
-    "start:frontend": "webpack serve --open --config webpack.dev.cjs",
-    "start:backend": "nodemon src/server/server.js",
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "prod": "node src/server/server.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "npx prettier --write **/*.{js,jsx,md}",
-    "format:check": "npx prettier --check **/*.{js,jsx,md}",
-    "gh-deploy": "git push origin :gh-pages && git subtree push --prefix dist origin gh-pages",
-    "gh-deploy-init": "git push origin && git subtree push --prefix dist origin gh-pages"
+    "format:check": "npx prettier --check **/*.{js,jsx,md}"
   },
   "repository": {
     "type": "git",
@@ -51,6 +44,7 @@
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "sequelize": "^6.37.5",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "stripe": "^17.3.1"
   }
 }

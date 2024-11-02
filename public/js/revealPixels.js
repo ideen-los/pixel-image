@@ -1,5 +1,6 @@
-import img from './img/indian-food.jpg';
-
+const imgPath = '../img/indian-food.jpg';
+const image = new Image();
+image.src = imgPath;
 const canvas = document.getElementById('imageCanvas');
 const renderingContext = canvas.getContext('2d');
 
@@ -85,8 +86,6 @@ function animateReveal(totalToReveal, pixelsPerFrame) {
 }
 
 // Load the image and set up canvases
-const image = new Image();
-image.src = img;
 image.onload = () => {
   // Draw the image on the offscreen canvas
   offscreenRenderingContext.drawImage(image, 0, 0, canvas.width, canvas.height);
