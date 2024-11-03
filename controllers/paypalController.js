@@ -22,13 +22,15 @@ export const createPaypalOrder = async (req, res) => {
       const url = result.url;
       const id = result.id;
 
-      // Temporaily save donor data in the database
+      // Save donor data in the database
       const newOrder = await Order.create({
         name,
         amount: truncatedAmount,
-        paypalOrderId: id,
+        paymentMethod: 'paypal',
+        orderId: id,
         status: 'pending',
       });
+
       if (!url) {
         throw new Error('Approval URL not found');
       }
@@ -48,7 +50,7 @@ export const createPaypalOrder = async (req, res) => {
 export const capturePaypalPayment = async (req, res) => {
   try {
     const paymentData = await capturePayment(req.query.token);
-    console.log(paymentData);
+    console.log('paypal payment data:', paymentData);
 
     // Get the order id
     const id = paymentData.id;
@@ -59,21 +61,26 @@ export const capturePaypalPayment = async (req, res) => {
     const donationCurrency =
       paymentData.purchase_units[0].payments.captures[0].amount.currency_code;
 
-    // 1. Find the order (donation) in the database
-    const order = await Order.findOne({
-      where: { paypalOrderId: id },
-    });
+    if (paymentData.status === 'COMPLETED') {
+      // 1. Find the order (donation) in the database
+      const order = await Order.findOne({
+        where: { paymentMethod: 'paypal', orderId: id },
+      });
 
-    if (!order) {
-      console.log('Order not found!');
+      if (!order) {
+        console.log('Order not found!');
+      } else {
+        // 2. Update the order status from 'pending' to 'complete'
+        order.status = 'completed';
+        await order.save();
+        console.log('Order updated to "completed"!');
+      }
+
+      res.render('donationSuccess', { donationAmount, donationCurrency });
     } else {
-      // 2. Update the order status from 'pending' to 'complete'
-      order.status = 'completed';
-      await order.save();
-      console.log('Order updated!');
+      // Payment not completed
+      res.send('Payment not completed. Please try again.');
     }
-
-    res.render('donationSuccess', { donationAmount, donationCurrency });
   } catch (error) {
     res.send('Error: ' + error);
   }

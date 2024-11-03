@@ -37,7 +37,7 @@ app.get('/cancel', (req, res) => {
   res.redirect('/');
 });
 
-// Sync the database
+/* Sync the database */
 sequelize
   .sync()
   .then(() => {
