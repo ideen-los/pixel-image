@@ -9,10 +9,10 @@ export const createPaypalOrder = async (req, res) => {
   try {
     const name = req.body.name; // name of the donor
     const amount = parseFloat(req.body.amount); // Convert the donation amount to a number
+    console.log('req.body.amount: ', amount);
     const positiveAmount = Math.abs(amount); // If the value is negative, convert it to positive
     const truncatedAmount = Math.trunc(positiveAmount); // If the value is a decimal, truncate it
     console.log('req.body:', req.body);
-    console.log(truncatedAmount);
 
     if (!truncatedAmount || truncatedAmount == 0 || truncatedAmount == '') {
       res.redirect('/');
@@ -37,7 +37,7 @@ export const createPaypalOrder = async (req, res) => {
       res.redirect(url);
     }
   } catch (error) {
-    console.error('Error in /pay route:', error);
+    console.error('Error in /donate route:', error);
     res
       .status(500)
       .send(

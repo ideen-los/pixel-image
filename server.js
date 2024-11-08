@@ -9,6 +9,7 @@ import {
   createStripeSession,
   retrieveStripePayment,
 } from './controllers/stripeController.js';
+import Order from './models/Order.js';
 
 dotenv.config();
 
@@ -20,8 +21,65 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 /* ROUTES */
-app.get('/', (req, res) => {
-  res.render('index');
+// Home
+app.get('/', async (req, res) => {
+  try {
+    const orders = await Order.findAll({
+      attributes: ['name', 'amount', 'updatedAt'],
+      where: {
+        status: 'completed', // Fetch only orders with the status 'completed'
+      },
+      raw: true,
+    });
+
+    // Get the number of completed orders
+    const numberOfOrders = await Order.count({
+      where: {
+        status: 'completed',
+      },
+    });
+
+    // Get the number of pixels that are already revealed
+    const pixelsToReveal = await Order.sum('amount', {
+      where: {
+        status: 'completed',
+      },
+    });
+
+    // Format the date
+    const formattedOrders = orders.map((order) => {
+      const formattedDate = new Intl.DateTimeFormat('de-DE', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      }).format(new Date(order.updatedAt));
+
+      return {
+        ...order,
+        formattedUpdatedAt: formattedDate,
+      };
+    });
+
+    res.render('index', {
+      pixelsToReveal,
+      numberOfOrders,
+      orders: formattedOrders,
+    });
+  } catch (error) {
+    console.log('Unable to load orders: ', error);
+  }
+});
+
+app.post('/donate', async (req, res) => {
+  if (req.body.paymentMethod === 'paypal') {
+    await createPaypalOrder(req, res);
+  } else if (req.body.paymentMethod === 'stripe') {
+    await createStripeSession(req, res);
+  } else {
+    res.send('Fehler: Keine Zahlungsart ausgewählt.');
+  }
 });
 
 // PayPal

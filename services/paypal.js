@@ -33,8 +33,7 @@ export const createOrder = async function (amount) {
         {
           items: [
             {
-              name: 'PRO EQUIS e.V. Spende',
-              description: 'Spende für den Pferdeschutzverein PRO EQUIS',
+              name: 'PRO EQUIS e.V. Spende - Spende für den Pferdeschutzverein PRO EQUIS',
               quantity: '1',
               unit_amount: {
                 currency_code: 'EUR',
@@ -58,7 +57,8 @@ export const createOrder = async function (amount) {
 
       application_context: {
         brand_name: 'PRO EQUIS e.V.',
-        return_url: process.env.BASE_URL + '/complete-paypal',
+        landing_page: 'LOGIN',
+        return_url: process.env.BASE_URL + '/complete',
         cancel_url: process.env.BASE_URL + '/cancel',
         shipping_preference: 'NO_SHIPPING',
         user_action: 'PAY_NOW',

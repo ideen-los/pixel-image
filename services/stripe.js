@@ -18,7 +18,7 @@ export const createSession = async function (amount) {
         price_data: {
           currency: 'eur',
           product_data: {
-            name: 'PRO EQUIS e.V. Spende',
+            name: 'PRO EQUIS e.V. Spende - Spende für den Pferdeschutzverein PRO EQUIS',
           },
           unit_amount: amountInCents,
         },

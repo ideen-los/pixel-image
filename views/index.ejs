@@ -3,56 +3,145 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fgdfg</title>
+    <title>Eulenmühle - Pferdeschutzverein PRO EQUIS e.V.</title>
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body id="home">
-    <h1>Eulenmühle Spende</h1>
-    <canvas id="imageCanvas" width="1333" height="750"></canvas>
-    <form id="donationForm" method="post">
-      <input
-        type="text"
-        name="name"
-        id="donorName"
-        placeholder="Ihr Name"
-        required />
-      <input
-        type="number"
-        name="amount"
-        id="donationAmount"
-        placeholder="Betrag in EUR"
-        required />
-      <button
-        type="submit"
-        name="paymentMethod"
-        value="paypal"
-        id="paypalButton">
-        PayPal
-      </button>
-      <button
-        type="submit"
-        name="paymentMethod"
-        value="stripe"
-        id="stripeButton">
-        Stripe
-      </button>
-    </form>
-    <canvas id="offscreenCanvas" width="1333" height="750"></canvas>
+    <div id="content">
+      <header>
+        <div class="logo-and-menu-wrapper">
+          <div class="eulenmuehle-logo">
+            <img src="/img/eulenmuehle-logo.png" class="logo" /><img
+              src="/img/eulenmuehle-tag_black.svg"
+              class="tag" />
+          </div>
+          <div class="menu-wrapper">
+            <ul>
+              <li>Kontakt</li>
+              <li>Impressum</li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <!-- Image and Form Wrapper -->
+        <div class="image-and-form-wrapper">
+          <div class="headline">
+            <h1>Ihre Spende rettet Pferdeleben!</h1>
+            <h2>Jeder Euro an PRO EQUIS e.V. deckt einen Pixel auf</h2>
+            Gespendeter Betrag: €<%= pixelsToReveal %><br />
+            Aufgedeckte Pixel: <%= pixelsToReveal %> von 1.000.000<br />
+            Anzahl an Spenden: <%= numberOfOrders %>
+          </div>
+          <!-- Canvas Wrapper -->
+          <div class="image-wrapper">
+            <!-- Canvas -->
+            <canvas id="imageCanvas" width="1191" height="838"></canvas>
+          </div>
+        </div>
+
+        <!-- PRO EQUIS Logo -->
+        <div class="pro-equis-logo">
+          <img src="/img/pro-equis-logo.svg" /><span
+            ><span>Pferdeschutzverein</span>PRO EQUIS e.V.</span
+          >
+        </div>
+
+        <!-- Donation Form Wrapper -->
+        <div class="form-wrapper">
+          <!-- Donation Form -->
+          <form id="donationForm" method="post" action="/donate">
+            <!-- Amount -->
+            <div class="amount-wrapper">
+              <input
+                type="radio"
+                id="option-hundred"
+                name="amountSelect"
+                value="100" />
+              <label class="amount hundred" for="option-hundred">€100</label>
+
+              <input
+                type="radio"
+                id="option-fifty"
+                name="amountSelect"
+                value="50" />
+              <label class="amount fifty" for="option-fifty">€50</label>
+
+              <input
+                type="radio"
+                id="option-twentyfive"
+                name="amountSelect"
+                value="25" />
+              <label class="amount twentyfive" for="option-twentyfive"
+                >€25</label
+              >
+            </div>
+
+            <div class="donation-and-amount-field-wrapper">
+              <!-- Donation Amount Field -->
+              <div class="donation-field-wrapper">
+                <span>€</span>
+                <input
+                  type="number"
+                  name="amount"
+                  id="donationAmountField"
+                  placeholder="50"
+                  min="1"
+                  required />
+              </div>
+
+              <!-- Name Field -->
+              <input
+                type="text"
+                name="name"
+                id="donorName"
+                placeholder="Ihr Name"
+                required />
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="payment-method-wrapper">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="paypal"
+                id="paypalButton"
+                required />
+              <label for="paypalButton">PayPal </label>
+
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="stripe"
+                id="stripeButton" />
+              <label for="stripeButton">Kreditkarte </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit">Jetzt Spenden</button>
+          </form>
+        </div>
+
+        <!-- Donor List -->
+        <div id="donor-list">
+          <h3 class="donor-list-headline">Vielen Dank für Ihre Spende!</h3>
+          <% orders.forEach(order => { %>
+          <div class="donor-and-donation-amount-wrapper">
+            <div class="donation-time"><%= order.formattedUpdatedAt %></div>
+            <div class="donor-and-amount">
+              <div class="donor"><%= order.name %></div>
+              <div class="donation-amount">€<%= order.amount %></div>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </main>
+    </div>
+
+    <canvas id="offscreenCanvas" width="1191" height="838"></canvas>
 
     <script src="/js/revealPixels.js"></script>
-    <script>
-      const form = document.getElementById('donationForm');
-
-      form.addEventListener('submit', (e) => {
-        const paymentMethod = e.submitter.value;
-
-        if (paymentMethod === 'paypal') {
-          form.action = '/pay-paypal';
-        }
-        if (paymentMethod === 'stripe') {
-          form.action = '/pay-stripe';
-        }
-      });
-    </script>
+    <script src="/js/handleDonationForm.js"></script>
   </body>
 </html>

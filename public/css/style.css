@@ -1,35 +1,440 @@
+/* FONT FACE
+=============================================================================================== */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900; /* Supports a range from Thin (100) to Black (900) */
+  font-display: swap; /* Optional for better performance */
+  src: url('../fonts/Inter-VariableFont_slnt,wght.woff2')
+    format('truetype-variations');
+}
+
+/* GENERAL STYLES
+=============================================================================================== */
 body {
+  margin: 0;
+  padding: 0;
+
+  font-family: 'Inter';
+  font-size: 20px;
+
+  background-color: #fff6f1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0;
-  padding: 0;
+
+  margin: 0 auto;
 }
 
+input {
+  font-size: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* HEADER
+=============================================================================================== */
 header {
   display: flex;
   justify-content: center;
+  width: 100%;
+
+  /* background: #3b3a48; */
 }
 
-#imageCanvas {
-  display: block;
-  height: 50svh;
-  max-height: 100%;
+.logo-and-menu-wrapper {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 50px;
 
+  width: 100%;
+  max-width: 1100px;
+  padding: 6px 0;
+}
+
+/* Eulenmühle Logo */
+.eulenmuehle-logo img {
+  width: 100%;
+}
+
+.eulenmuehle-logo .logo {
+  max-width: 36px;
+}
+
+.eulenmuehle-logo .tag {
+  max-width: 120px;
+  margin-left: 10px;
+}
+
+.menu-wrapper ul {
+  display: flex;
+  gap: 30px;
+
+  margin: 0;
+  padding: 0;
+
+  font-size: 16px;
+  list-style: none;
+}
+
+/* MAIN
+=============================================================================================== */
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  width: 100%;
+  max-width: 1100px;
+
+  padding: 20px 0;
+}
+
+/* HEADLINE
+=============================================================================================== */
+.headline {
+  max-width: 900px;
   margin: 0 auto;
 
-  box-sizing: border-box;
-  image-rendering: pixelated; /* Ensures sharp pixels when scaled */
-  transform: scale(
-    1
-  ); /* Optional: Scales up the canvas for better visibility */
-  transform-origin: center;
+  line-height: 140%;
+  text-align: center;
+  letter-spacing: -1px;
+}
+
+.headline h1 {
+  font-size: 42px;
+  font-weight: 440;
+}
+.headline h2 {
+  font-size: 32px;
+  font-weight: 300;
+}
+
+/* PIE CHART
+=============================================================================================== */
+[type='range'] {
+  width: 200px;
+}
+
+section {
+  position: relative;
+  background-color: #fff;
+  border-radius: 7px;
+  padding: 5px 30px 30px;
+  margin: 20px;
+  width: 260px;
+  height: 306px;
+}
+
+.code {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  width: 260px;
+  height: 0;
+  left: 0;
+  margin: auto;
+  line-height: 1.6;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+.show-code .code {
+  visibility: visible;
+  opacity: 1;
+  height: 100%;
+  top: 45px;
+}
+
+pre {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+[data-pie-index='2'] {
+  position: relative;
+  border-radius: 50%;
+  box-shadow: inset 0 0 25px 10px #a2caff;
+}
+
+[data-pie-index='16'] {
+  position: relative;
+  border-radius: 50%;
+  box-shadow: inset 0 0 25px 10px #f50057;
+}
+
+.heart {
+  position: absolute;
+  font-size: 2rem;
+  margin: auto;
+  width: 100%;
+  bottom: 45px;
+  text-align: center;
+  animation: heart 0.8s linear infinite;
+  text-shadow: 0px 0px 10px #f50057;
+}
+
+@keyframes heart {
+  0% {
+    transform: scale(1.07);
+  }
+  80% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
+  }
+}
+
+.pie-unit-11 {
+  fill: #f50057;
+  font-size: 1rem;
+}
+
+/* ASIDE (Logo and Donor List)
+=============================================================================================== */
+aside.donor-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  max-width: 300px;
+  padding: 0 20px 0 0;
+}
+
+aside h3 {
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+/* PRO EQUIS Logo */
+.pro-equis-logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.pro-equis-logo img {
+  width: 100%;
+  max-width: 100px;
+}
+
+.pro-equis-logo span {
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.pro-equis-logo span > span {
+  display: block;
+}
+
+/* DONOR LIST
+=============================================================================================== */
+#donor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.donor-and-donation-amount-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  padding: 10px;
+
+  background-color: #fcede2;
+  border-radius: 8px;
+}
+
+.donation-time {
+  font-size: 14px;
+}
+
+/* IMAGE AND FORM WRAPPER
+=============================================================================================== */
+.image-and-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.image-and-form-wrapper .image-wrapper {
+  max-width: 100%;
+}
+
+.image-and-form-wrapper .form-wrapper {
+}
+
+/* ASIDE (Donation Form)
+=============================================================================================== */
+aside.donation-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+
+  max-width: 300px;
+  padding: 0 20px 0 0;
+}
+
+/* DONATION FORM
+=============================================================================================== */
+#donationForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Radio Buttons Styles */
+body#home label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 13px;
+
+  background-color: #eee;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Hide Normal Radio Buttons */
+body#home input[type='radio'] {
+  opacity: 0;
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+/* Checked State */
+body#home input[type='radio']:checked + label {
+  border-color: #007bff;
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Focus State */
+body#home input[type='radio']:focus + label {
+  outline: 1px solid;
+}
+
+/* Hover State */
+body#home label:hover {
+  border-color: #007bff;
+}
+
+/* Text & Number Input */
+body#home input[type='text'],
+body#home .donation-field-wrapper {
+  padding: 10px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+/* Donation Field Wrapper */
+body#home form .donation-field-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 24px;
+}
+
+body#home .donation-field-wrapper:focus-within {
+  outline: 2px solid;
+}
+
+/* Donation Amount Field */
+body#home form #donationAmountField {
+  flex: 1;
+  padding: 1px 0 0;
+
+  font-size: 24px;
+  font-weight: 700;
+  border: none;
+
+  background: transparent;
+}
+
+body#home #donationAmountField::placeholder {
+  color: #c0c0c0;
+  font-weight: 700;
+}
+
+body#home #donationAmountField:focus {
+  outline: none;
+}
+
+/* Amount Wrapper */
+body#home .amount-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 5px;
+}
+
+/* Payment Method Wrapper */
+body#home .payment-method-wrapper {
+  display: flex;
+  gap: 5px;
+}
+
+body#home .payment-method-wrapper label {
+  justify-content: flex-start;
+}
+
+/* Donor Name Field */
+body#home form #donorName {
+  width: 100%;
+  padding: 13.5px;
+}
+
+/* Submit Button */
+body#home form button[type='submit'] {
+  width: 100%;
+  padding: 14px;
+  border: none;
+
+  color: #fff;
+  font-weight: 550;
+  font-size: 22px;
+
+  background-color: #2dae63;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+body#home form button[type='submit']:hover {
+  background-color: #218838;
+}
+
+/* IMAGE CANVASES
+=============================================================================================== */
+#imageCanvas {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+
+  border-radius: 10px;
 }
 
 #offscreenCanvas {
   display: none;
-}
-
-body#home form {
-  margin-top: 20px;
 }
