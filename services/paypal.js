@@ -58,7 +58,7 @@ export const createOrder = async function (amount) {
       application_context: {
         brand_name: 'PRO EQUIS e.V.',
         landing_page: 'LOGIN',
-        return_url: process.env.BASE_URL + '/complete',
+        return_url: process.env.BASE_URL + '/complete-paypal',
         cancel_url: process.env.BASE_URL + '/cancel',
         shipping_preference: 'NO_SHIPPING',
         user_action: 'PAY_NOW',

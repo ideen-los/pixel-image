@@ -40,21 +40,24 @@ app.get('/', async (req, res) => {
       },
     });
 
-    // Get the number of pixels that are already revealed
+    // Get the sum of all orders
+    // equals the number of pixels to reveal
     const pixelsToReveal = await Order.sum('amount', {
       where: {
         status: 'completed',
       },
     });
 
-    // Format the date
+    // Format name of the donor, date of the order and the amount
     const formattedOrders = orders.map((order) => {
-      const formattedDate = new Intl.DateTimeFormat('de-DE').format(
-        new Date(order.updatedAt)
-      );
-
       let formattedName;
+      let formattedAmount;
+      let formattedDate;
 
+      // Add 1000 separator to the donation amount
+      formattedAmount = order.amount.toLocaleString('de-DE');
+
+      // Truncate the name of the donor
       if (order.name.length > 100) {
         let truncatedName = order.name.substring(0, 2);
         formattedName = truncatedName + '...';
@@ -62,8 +65,14 @@ app.get('/', async (req, res) => {
         formattedName = order.name;
       }
 
+      // Format the date of the order
+      formattedDate = new Intl.DateTimeFormat('de-DE').format(
+        new Date(order.updatedAt)
+      );
+
       return {
         ...order,
+        formattedAmount,
         name: formattedName,
         formattedUpdatedAt: formattedDate,
       };

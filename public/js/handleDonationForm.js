@@ -16,10 +16,27 @@ function uncheckDonationAmountInputs() {
 }
 
 function setSubmitButtonTextContent(amount) {
-  const submitButton = document.querySelector('form button[type="submit"');
+  // Corrected querySelector with closing bracket
+  const submitButton = document.querySelector('form button[type="submit"]');
 
-  if (amount) {
-    submitButton.textContent = `Jetzt ${amount}€ spenden`;
+  if (!submitButton) {
+    console.error('Submit button not found!');
+    return;
+  }
+
+  // Ensure 'amount' is a number
+  const numericAmount = Number(amount);
+
+  if (isNaN(numericAmount)) {
+    console.warn(`Invalid amount: ${amount}. Falling back to default text.`);
+    submitButton.textContent = `Jetzt spenden`;
+    return;
+  }
+
+  if (numericAmount) {
+    submitButton.textContent = `Jetzt ${numericAmount.toLocaleString(
+      'de-DE'
+    )}€ spenden`;
   } else {
     submitButton.textContent = `Jetzt spenden`;
   }

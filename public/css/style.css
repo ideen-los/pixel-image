@@ -9,6 +9,12 @@
     format('truetype-variations');
 }
 
+/* CUSTOM PROPERTIES
+=============================================================================================== */
+:root {
+  --bold: 580;
+}
+
 /* GENERAL STYLES
 =============================================================================================== */
 body {
@@ -111,7 +117,7 @@ main {
 
 .headline h1 {
   font-size: 42px;
-  font-weight: 540;
+  font-weight: var(--bold);
   line-height: 140%;
   margin-bottom: 15px;
 }
@@ -145,7 +151,7 @@ main {
 }
 
 .counter-label {
-  font-weight: 600;
+  font-weight: var(--bold);
 }
 
 .meter {
@@ -310,10 +316,11 @@ body#home .donation-field-wrapper:focus-within {
 body#home form #donationAmountField {
   width: 100%;
   flex: 1;
-  padding: 1px 0 0;
+  padding: 0;
 
+  font-family: 'Custom Font';
   font-size: 24px;
-  font-weight: 540;
+  font-weight: 500;
   border: none;
 
   background: transparent;
@@ -321,7 +328,7 @@ body#home form #donationAmountField {
 
 body#home #donationAmountField::placeholder {
   color: #c0c0c0;
-  font-weight: 540;
+  font-weight: var(--bold);
 }
 
 body#home #donationAmountField:focus {
@@ -402,10 +409,11 @@ span.description {
 
 span.description span.info {
   display: flex;
-  width: 100%;
-  max-width: 15px;
+  width: 15px;
+  height: 14px;
   background-color: #8f8178;
   mask-image: url(/img/info.svg);
+  mask-repeat: no-repeat;
 }
 
 body#home form #donorName::placeholder {
@@ -419,7 +427,7 @@ body#home form button[type='submit'] {
   border: none;
 
   color: #fff;
-  font-weight: 550;
+  font-weight: var(--bold);
   font-size: 22px;
 
   background-color: #0bb175;
@@ -432,7 +440,7 @@ body#home form button[type='submit'] {
 }
 
 body#home form button[type='submit']:hover {
-  background-color: #218838;
+  background-color: #009760;
 }
 
 /* DONOR LIST WRAPPER
@@ -462,6 +470,7 @@ body#home form button[type='submit']:hover {
 
 .donor-list-headline {
   margin-top: 0;
+  font-weight: var(--bold);
 }
 
 .donor-and-donation-amount-wrapper {
@@ -477,7 +486,7 @@ body#home form button[type='submit']:hover {
 .donation-amount {
   display: flex;
   align-items: center;
-  font-weight: 600;
+  font-weight: var(--bold);
 }
 
 .donation-time {

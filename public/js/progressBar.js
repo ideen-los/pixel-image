@@ -1,40 +1,66 @@
-const counters = document.querySelectorAll('.counter');
-const wrapper = document.querySelector('.meter');
-const bar = document.querySelector('.meter > span');
+document.addEventListener('DOMContentLoaded', () => {
+  const counters = document.querySelectorAll('.counter');
+  const wrapper = document.querySelector('.meter');
+  const bar = document.querySelector('.meter > span');
 
-window.onload = () => {
-  let wrapperWidth = wrapper.offsetWidth;
-  let getProgress = parseFloat(bar.dataset.progress);
-  let targetWidth = (getProgress / 1000000) * wrapperWidth;
+  if (!wrapper || !bar) {
+    console.error('Meter or bar element not found!');
+    return;
+  }
 
-  // Incrementally animate the bar width
-  let currentWidth = 0;
+  const getProgress = parseFloat(window.pixelsRevealed);
+  const wrapperWidth = wrapper.offsetWidth;
+  const targetWidth = (getProgress / 1000000) * wrapperWidth; // Adjust denominator based on your scaling
+
+  // Animate the progress bar based on time
+  const animationDuration = 3700; // Duration in milliseconds
+
   const animateBar = () => {
-    if (currentWidth < targetWidth) {
-      currentWidth += targetWidth / 110; // Adjust division for smoother/slower animations
+    const startTime = performance.now();
+
+    function step(timestamp) {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / animationDuration, 1); // Progress from 0 to 1
+
+      const currentWidth = progress * targetWidth;
       bar.style.width = `${currentWidth}px`;
-      requestAnimationFrame(animateBar);
-    } else {
-      bar.style.width = `${targetWidth}px`; // Ensure it completes exactly at the target
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
     }
+
+    requestAnimationFrame(step);
   };
 
-  requestAnimationFrame(animateBar);
-};
+  animateBar();
 
-const updateCounter = (counter) => {
-  const target = +counter.getAttribute('data-target');
-  const count = +counter.innerText;
-  const increment = target / 200;
-  if (count < target) {
-    counter.innerText = `${Math.ceil(count + increment)}`;
-    requestAnimationFrame(() => updateCounter(counter));
-  } else {
-    counter.innerText = target.toLocaleString('de-DE');
-  }
-};
+  // Function to update counters based on time
+  const updateCounter = (counter) => {
+    const startTime = performance.now();
+    const target = getProgress;
+    const counterDuration = animationDuration * 1.2; // Increase duration by 20%
 
-counters.forEach((counter) => {
-  counter.innerText = '0';
-  updateCounter(counter);
+    function step(timestamp) {
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / counterDuration, 1);
+
+      const count = Math.floor(progress * target);
+      counter.innerText = count.toLocaleString('de-DE');
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        counter.innerText = target.toLocaleString('de-DE');
+      }
+    }
+
+    requestAnimationFrame(step);
+  };
+
+  // Initialize counters
+  counters.forEach((counter) => {
+    counter.innerText = '0';
+    updateCounter(counter);
+  });
 });
