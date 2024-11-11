@@ -15,12 +15,24 @@ function uncheckDonationAmountInputs() {
   });
 }
 
+function setSubmitButtonTextContent(amount) {
+  const submitButton = document.querySelector('form button[type="submit"');
+
+  if (amount) {
+    submitButton.textContent = `Jetzt ${amount}€ spenden`;
+  } else {
+    submitButton.textContent = `Jetzt spenden`;
+  }
+}
+
 /* Sets the value of the donation amount input fieldto the
  * amount selected via the donation amount radio inputs. */
 function setDonationAmount(input) {
   if (isChecked(input)) {
     let inputValue = input.value;
     donationAmountField.value = inputValue;
+
+    return inputValue;
   }
 }
 
@@ -28,7 +40,8 @@ function setDonationAmount(input) {
  * Sets the selected amount as value of the donation amount input field. */
 donationAmountInputs.forEach((input) => {
   input.addEventListener('change', () => {
-    setDonationAmount(input);
+    const amount = setDonationAmount(input);
+    setSubmitButtonTextContent(amount);
   });
 });
 
@@ -36,4 +49,5 @@ donationAmountInputs.forEach((input) => {
  * Unchecks all donation amount radio inputs when triggered. */
 donationAmountField.addEventListener('input', () => {
   uncheckDonationAmountInputs();
+  setSubmitButtonTextContent(donationAmountField.value);
 });

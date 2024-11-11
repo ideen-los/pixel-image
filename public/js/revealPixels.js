@@ -1,5 +1,5 @@
 // Paths to your images
-const overlayPath = '../img/eulenmuehle-pixelbild_overlay.jpg';
+const overlayPath = '../img/eulenmuehle-pixelbild_overlay-min.jpg';
 const imgPath = '../img/eulenmuehle-pixelbild.jpg';
 
 // Get canvas elements and contexts
@@ -158,7 +158,7 @@ Promise.all([loadImage(overlayPath), loadImage(imgPath)])
 
     // Optionally, set an initial number of pixels to reveal
     // For example, reveal the first 1000 pixels
-    /* updateTotalPixels(1000000); */
+    updateTotalPixels(1000000);
 
     // Now, you can update totalPixelsToReveal later based on database data
     // Example:

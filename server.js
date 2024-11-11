@@ -29,6 +29,7 @@ app.get('/', async (req, res) => {
       where: {
         status: 'completed', // Fetch only orders with the status 'completed'
       },
+      order: [['amount', 'DESC']],
       raw: true,
     });
 
@@ -48,16 +49,22 @@ app.get('/', async (req, res) => {
 
     // Format the date
     const formattedOrders = orders.map((order) => {
-      const formattedDate = new Intl.DateTimeFormat('de-DE', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-      }).format(new Date(order.updatedAt));
+      const formattedDate = new Intl.DateTimeFormat('de-DE').format(
+        new Date(order.updatedAt)
+      );
+
+      let formattedName;
+
+      if (order.name.length > 100) {
+        let truncatedName = order.name.substring(0, 2);
+        formattedName = truncatedName + '...';
+      } else {
+        formattedName = order.name;
+      }
 
       return {
         ...order,
+        name: formattedName,
         formattedUpdatedAt: formattedDate,
       };
     });

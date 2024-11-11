@@ -1,7 +1,7 @@
 /* FONT FACE
 =============================================================================================== */
 @font-face {
-  font-family: 'Inter';
+  font-family: 'Custom Font';
   font-style: normal;
   font-weight: 100 900; /* Supports a range from Thin (100) to Black (900) */
   font-display: swap; /* Optional for better performance */
@@ -15,7 +15,7 @@ body {
   margin: 0;
   padding: 0;
 
-  font-family: 'Inter';
+  font-family: 'Custom Font';
   font-size: 20px;
 
   background-color: #fff6f1;
@@ -46,9 +46,9 @@ button {
 header {
   display: flex;
   justify-content: center;
-  width: 100%;
 
-  /* background: #3b3a48; */
+  width: 100%;
+  background: #f2dfd5;
 }
 
 .logo-and-menu-wrapper {
@@ -83,7 +83,7 @@ header {
   margin: 0;
   padding: 0;
 
-  font-size: 16px;
+  font-size: 18px;
   list-style: none;
 }
 
@@ -96,9 +96,7 @@ main {
   gap: 20px;
 
   width: 100%;
-  max-width: 1100px;
-
-  padding: 20px 0;
+  max-width: 1400px;
 }
 
 /* HEADLINE
@@ -107,126 +105,120 @@ main {
   max-width: 900px;
   margin: 0 auto;
 
-  line-height: 140%;
   text-align: center;
   letter-spacing: -1px;
 }
 
 .headline h1 {
   font-size: 42px;
-  font-weight: 440;
+  font-weight: 540;
+  line-height: 140%;
+  margin-bottom: 15px;
 }
-.headline h2 {
-  font-size: 32px;
-  font-weight: 300;
+.headline span {
+  display: block;
+  max-width: 700px;
+  line-height: 140%;
 }
 
-/* PIE CHART
+/* PROGRESS BAR
 =============================================================================================== */
-[type='range'] {
-  width: 200px;
-}
+.progress-bar-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 
-section {
-  position: relative;
-  background-color: #fff;
-  border-radius: 7px;
-  padding: 5px 30px 30px;
-  margin: 20px;
-  width: 260px;
-  height: 306px;
-}
-
-.code {
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  width: 260px;
-  height: 0;
-  left: 0;
-  margin: auto;
-  line-height: 1.6;
-  transition: visibility 0s, opacity 0.5s linear;
-}
-
-.show-code .code {
-  visibility: visible;
-  opacity: 1;
-  height: 100%;
-  top: 45px;
-}
-
-pre {
-  margin: 0;
-  padding: 0;
   width: 100%;
-  height: 100%;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
-[data-pie-index='2'] {
+.counter-wrapper {
+  display: flex;
+  justify-content: space-between;
+
+  font-size: 16px;
+}
+
+.counter {
+  width: 80px;
+}
+
+.counter-label {
+  font-weight: 600;
+}
+
+.meter {
   position: relative;
-  border-radius: 50%;
-  box-shadow: inset 0 0 25px 10px #a2caff;
-}
+  display: block;
 
-[data-pie-index='16'] {
-  position: relative;
-  border-radius: 50%;
-  box-shadow: inset 0 0 25px 10px #f50057;
-}
-
-.heart {
-  position: absolute;
-  font-size: 2rem;
-  margin: auto;
   width: 100%;
-  bottom: 45px;
-  text-align: center;
-  animation: heart 0.8s linear infinite;
-  text-shadow: 0px 0px 10px #f50057;
+  height: 15px;
+
+  background: #e8dfdf;
+  border-radius: 25px;
+  overflow: hidden;
 }
 
-@keyframes heart {
-  0% {
-    transform: scale(1.07);
-  }
-  80% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(0.8);
-  }
+.meter > span {
+  display: block;
+  height: 100%;
+  border-radius: 20px;
+  background: #cba397;
+  background: linear-gradient(45deg, #cc9799, #e6adba);
+  position: relative;
+  overflow: hidden;
+  transition: width 1.5s ease-out;
 }
 
-.pie-unit-11 {
-  fill: #f50057;
-  font-size: 1rem;
-}
-
-/* ASIDE (Logo and Donor List)
+/* IMAGE AND FORM WRAPPER
 =============================================================================================== */
-aside.donor-list-wrapper {
+.headline-and-content {
   display: flex;
   flex-direction: column;
   gap: 30px;
-
-  max-width: 300px;
-  padding: 0 20px 0 0;
 }
 
-aside h3 {
-  margin: 0 0 10px;
-  padding: 0;
+.headline-and-content .image-and-donor-list-wrapper {
+  max-width: 100%;
 }
 
-/* PRO EQUIS Logo */
-.pro-equis-logo {
+/* CANVAS AND DONATION FORM
+=============================================================================================== */
+.canvas-and-donation-form {
+  display: flex;
+}
+
+/* IMAGE CANVASES
+=============================================================================================== */
+#imageCanvas {
+  width: 100%;
+  max-width: 100%;
+  display: block;
+
+  border: 1px solid #f2dfd5;
+}
+
+#offscreenCanvas {
+  display: none;
+}
+
+/* PRO EQUIS LOGO AND FORM WRAPPER
+=============================================================================================== */
+.equis-logo-and-form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
+  gap: 20px;
+
+  width: 100%;
+  max-width: 300px;
+  padding: 20px;
+
+  background-color: #f2dfd5;
 }
 
+/* PRO EQUIS Logo
+=============================================================================================== */
 .pro-equis-logo img {
   width: 100%;
   max-width: 100px;
@@ -235,60 +227,10 @@ aside h3 {
 .pro-equis-logo span {
   font-size: 18px;
   font-weight: 500;
-  text-align: center;
 }
 
 .pro-equis-logo span > span {
   display: block;
-}
-
-/* DONOR LIST
-=============================================================================================== */
-#donor-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.donor-and-donation-amount-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  padding: 10px;
-
-  background-color: #fcede2;
-  border-radius: 8px;
-}
-
-.donation-time {
-  font-size: 14px;
-}
-
-/* IMAGE AND FORM WRAPPER
-=============================================================================================== */
-.image-and-form-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.image-and-form-wrapper .image-wrapper {
-  max-width: 100%;
-}
-
-.image-and-form-wrapper .form-wrapper {
-}
-
-/* ASIDE (Donation Form)
-=============================================================================================== */
-aside.donation-form-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-
-  max-width: 300px;
-  padding: 0 20px 0 0;
 }
 
 /* DONATION FORM
@@ -296,7 +238,7 @@ aside.donation-form-wrapper {
 #donationForm {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 8px;
 }
 
 /* Radio Buttons Styles */
@@ -307,9 +249,9 @@ body#home label {
 
   padding: 13px;
 
-  background-color: #eee;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  background-color: #e5cfbf;
+  border: 2px solid #ceb8ac;
+
   cursor: pointer;
   user-select: none;
 }
@@ -324,28 +266,32 @@ body#home input[type='radio'] {
 
 /* Checked State */
 body#home input[type='radio']:checked + label {
-  border-color: #007bff;
-  background-color: #007bff;
-  color: #fff;
+  border-color: #000;
 }
 
 /* Focus State */
 body#home input[type='radio']:focus + label {
-  outline: 1px solid;
+  outline: 2px solid;
+  outline-offset: -2px;
 }
 
 /* Hover State */
 body#home label:hover {
-  border-color: #007bff;
+  border-color: #000;
 }
 
 /* Text & Number Input */
 body#home input[type='text'],
 body#home .donation-field-wrapper {
   padding: 10px;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  background-color: #fff;
+  border: none;
+  background-color: #fffaf7;
+}
+
+.donation-and-amount-field-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* Donation Field Wrapper */
@@ -362,11 +308,12 @@ body#home .donation-field-wrapper:focus-within {
 
 /* Donation Amount Field */
 body#home form #donationAmountField {
+  width: 100%;
   flex: 1;
   padding: 1px 0 0;
 
   font-size: 24px;
-  font-weight: 700;
+  font-weight: 540;
   border: none;
 
   background: transparent;
@@ -374,7 +321,7 @@ body#home form #donationAmountField {
 
 body#home #donationAmountField::placeholder {
   color: #c0c0c0;
-  font-weight: 700;
+  font-weight: 540;
 }
 
 body#home #donationAmountField:focus {
@@ -391,17 +338,78 @@ body#home .amount-wrapper {
 /* Payment Method Wrapper */
 body#home .payment-method-wrapper {
   display: flex;
-  gap: 5px;
+  flex-direction: column;
+  gap: 8px;
 }
 
-body#home .payment-method-wrapper label {
-  justify-content: flex-start;
+body#home .payment-method-wrapper img {
+  max-height: 23px;
+}
+
+body#home .payment-method-wrapper .radio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  background: #fff6f1;
+  border-radius: 50%;
+}
+
+body#home .payment-method-wrapper .radio::before {
+  display: none;
+  content: '';
+  width: 12px;
+  height: 12px;
+  background-color: #000;
+  border-radius: 50%;
+}
+
+body#home .payment-method-wrapper #paypalButton + label {
+  justify-content: space-between;
+}
+
+body#home .payment-method-wrapper input:checked + label .radio::before {
+  display: flex;
+}
+
+body#home .payment-method-wrapper #stripeButton + label {
+  justify-content: space-between;
+}
+
+body#home .payment-method-wrapper #stripeButton + label img {
+  max-width: 40px;
+}
+
+body#home .payment-method-wrapper #stripeButton + label > div {
+  display: flex;
 }
 
 /* Donor Name Field */
 body#home form #donorName {
   width: 100%;
   padding: 13.5px;
+}
+
+span.description {
+  display: flex;
+  gap: 3px;
+  margin-top: 5px;
+
+  font-size: 12px;
+  color: #8f8178;
+}
+
+span.description span.info {
+  display: flex;
+  width: 100%;
+  max-width: 15px;
+  background-color: #8f8178;
+  mask-image: url(/img/info.svg);
+}
+
+body#home form #donorName::placeholder {
+  color: #aaa;
 }
 
 /* Submit Button */
@@ -414,10 +422,12 @@ body#home form button[type='submit'] {
   font-weight: 550;
   font-size: 22px;
 
-  background-color: #2dae63;
+  background-color: #0bb175;
   border: none;
-  border-radius: 4px;
+
   cursor: pointer;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.02) 0px 10px 10px -5px;
   transition: background-color 0.3s;
 }
 
@@ -425,16 +435,78 @@ body#home form button[type='submit']:hover {
   background-color: #218838;
 }
 
-/* IMAGE CANVASES
+/* DONOR LIST WRAPPER
 =============================================================================================== */
-#imageCanvas {
+.donor-list-and-spacer {
+  display: flex;
   width: 100%;
-  max-width: 100%;
-  display: block;
-
-  border-radius: 10px;
 }
 
-#offscreenCanvas {
-  display: none;
+.donor-list-and-spacer .spacer {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* DONOR LIST
+=============================================================================================== */
+#donor-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  width: 100%;
+  padding: 0 0 50px;
+
+  font-size: 18px;
+}
+
+.donor-list-headline {
+  margin-top: 0;
+}
+
+.donor-and-donation-amount-wrapper {
+  display: grid;
+  grid-template-columns: 2fr 1fr auto;
+  gap: 10px;
+
+  padding: 20px;
+
+  background-color: #f2dfd5;
+}
+
+.donation-amount {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.donation-time {
+  display: flex;
+  align-items: center;
+}
+
+.donor {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.donor-icon {
+  flex-shrink: 0;
+  display: flex;
+
+  width: 30px;
+  height: 30px;
+
+  background-image: url(/img/user2.svg);
+  background-repeat: no-repeat;
+  background-color: #fff6f1;
+  border-radius: 50%;
+}
+
+.donor-name {
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
