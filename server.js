@@ -48,6 +48,13 @@ app.get('/', async (req, res) => {
       },
     });
 
+    let cappedPixelsToReveal;
+    if (pixelsToReveal > 1000000) {
+      cappedPixelsToReveal = 1000000;
+    } else {
+      cappedPixelsToReveal = pixelsToReveal;
+    }
+
     // Format name of the donor, date of the order and the amount
     const formattedOrders = orders.map((order) => {
       let formattedName;
@@ -79,7 +86,7 @@ app.get('/', async (req, res) => {
     });
 
     res.render('index', {
-      pixelsToReveal,
+      cappedPixelsToReveal,
       numberOfOrders,
       orders: formattedOrders,
     });

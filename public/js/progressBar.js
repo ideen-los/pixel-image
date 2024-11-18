@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const updateCounter = (counter) => {
     const startTime = performance.now();
     const target = getProgress;
-    const counterDuration = animationDuration * 1.2; // Increase duration by 20%
+    const counterDuration = animationDuration * 1.4; // Increase duration by 20%
 
     function step(timestamp) {
       const elapsed = timestamp - startTime;
