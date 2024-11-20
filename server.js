@@ -54,10 +54,6 @@ app.get('/legal', (req, res) => {
   res.render('legal');
 });
 
-app.get('/success', (req, res) => {
-  res.render('donationSuccess');
-});
-
 /* Sync the database */
 sequelize
   .sync()

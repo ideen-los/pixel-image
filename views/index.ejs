@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eulenmühle - Pferdeschutzverein PRO EQUIS e.V.</title>
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/dist/style.css" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -191,10 +191,8 @@
                 >
                 <% } else { %>
                 <div class="donor-list-total-amount">
-                  Gesamt:
-                  <span
-                    >€<%= cappedPixelsToReveal.toLocaleString('de-DE') %></span
-                  >
+                  Gesamtsumme:
+                  <span>€<%= totalDonations.toLocaleString('de-DE') %></span>
                 </div>
                 <% } %>
               </h3>

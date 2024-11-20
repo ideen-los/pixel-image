@@ -24,7 +24,7 @@ export const displayOrdersFromDatabase = async function (req, res) {
 
     // Get the sum of all orders
     // equals the number of pixels to reveal
-    const pixelsToReveal = await Order.sum('amount', {
+    const totalDonations = await Order.sum('amount', {
       where: {
         status: 'completed',
       },
@@ -32,12 +32,12 @@ export const displayOrdersFromDatabase = async function (req, res) {
 
     // Check if donated amount is available or above 1.000.000
     let cappedPixelsToReveal;
-    if (!pixelsToReveal) {
+    if (!totalDonations) {
       cappedPixelsToReveal = 0;
-    } else if (pixelsToReveal > 1000000) {
+    } else if (totalDonations > 1000000) {
       cappedPixelsToReveal = 1000000;
     } else {
-      cappedPixelsToReveal = pixelsToReveal;
+      cappedPixelsToReveal = totalDonations;
     }
 
     // Format name of the donor, date of the order and the amount
@@ -73,6 +73,7 @@ export const displayOrdersFromDatabase = async function (req, res) {
     });
 
     res.render('index', {
+      totalDonations,
       cappedPixelsToReveal,
       numberOfOrders,
       orders: formattedOrders,

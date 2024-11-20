@@ -5,7 +5,7 @@
   font-style: normal;
   font-weight: 100 900; /* Supports a range from Thin (100) to Black (900) */
   font-display: swap; /* Optional for better performance */
-  src: url('../fonts/Inter-VariableFont_slnt,wght.woff2')
+  src: url('../../fonts/Inter-VariableFont_slnt,wght.woff2')
     format('truetype-variations');
 }
 
@@ -255,11 +255,15 @@ main::before {
 }
 
 .counter {
-  width: 80px;
+  width: 70px;
 }
 
 .counter-label {
   font-weight: var(--bold);
+  text-align: center;
+}
+.completed .counter-label {
+  color: #51d88c;
 }
 
 .meter {
@@ -630,7 +634,7 @@ body#home form button[type='submit']:hover {
 =============================================================================================== */
 #donor-list {
   width: 100%;
-  padding: 0 0 50px;
+  padding: 0 0 60px;
 
   font-size: 0.9rem;
 }

@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eulenmühle - Pferdeschutzverein PRO EQUIS e.V. - Vielen Dank!</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/success.css" />
+    <link rel="stylesheet" href="/css/dist/style.css" />
+    <link rel="stylesheet" href="/css/dist/success.css" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -54,8 +54,11 @@
               src="/img/danke-fuer-spende_klein2.jpg"
               alt="Danke für Ihre Spende!" />
           </div>
-          <h1>Danke für Ihre Spende, Robert!</h1>
-
+          <% if (order && order.name) { %>
+          <h1>Danke für Ihre Spende, <%= order.name %>!</h1>
+          <% } else { %>
+          <h1>Danke für Ihre Spende!</h1>
+          <% } %>
           <div class="particletext hearts" id="heart-container"></div>
         </div>
         <a class="back-link" href="/">→ Zurück zur Spendenübersicht</a>

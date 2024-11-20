@@ -7,11 +7,13 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js",
+    "dev": "concurrently \"nodemon server.js\" \"npm run watch:css\"",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "npx prettier --write **/*.{js,jsx,md}",
-    "format:check": "npx prettier --check **/*.{js,jsx,md}"
+    "format:check": "npx prettier --check **/*.{js,jsx,md}",
+    "build:css": "postcss public/css/src/*.css -d public/css/dist/",
+    "watch:css": "postcss public/css/src/*.css -d public/css/dist/ --watch"
   },
   "repository": {
     "type": "git",
@@ -20,9 +22,14 @@
   "author": "ideen-los",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.0",
+    "cssnano": "^7.0.6",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0"
   },
   "dependencies": {
     "axios": "^1.7.7",

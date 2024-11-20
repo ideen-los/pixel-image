@@ -79,7 +79,11 @@ export const retrieveStripePayment = async (req, res) => {
         console.log('Order updated to "completed"!');
       }
 
-      res.render('donationSuccess', { donationAmount, donationCurrency });
+      res.render('donationSuccess', {
+        order,
+        donationAmount,
+        donationCurrency,
+      });
     } else {
       // Payment not completed
       res.send('Payment not completed. Please try again.');

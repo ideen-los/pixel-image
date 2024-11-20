@@ -20,11 +20,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let shuffledIndices = [];
 
   function displaySuccessMessage() {
-    const bar = document.querySelector('.meter > span');
+    const barWrapper = document.querySelector('.progress-bar-wrapper');
     const barLabel = document.querySelector('.counter-label');
 
-    bar.style.background = 'linear-gradient(45deg, #65b184, #2cc18c)';
-    barLabel.textContent = 'Alle Pixel wurden aufgedeckt!';
+    barWrapper.classList.add('completed');
+    barLabel.textContent = 'Es wurden alle Pixel aufgedeckt!';
   }
 
   /* Function to generate a shuffled array of pixel indices using Fisher-Yates shuffle. */
