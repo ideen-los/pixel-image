@@ -51,7 +51,7 @@
           <div class="headline">
             <h1>Spende an <span>PRO EQUIS e.V.</span></h1>
             <span class="headline-description"
-              >Ein Bild mit 1 Millionen Pixel - jeder Euro deckt einen Pixel
+              >Ein Bild mit 1 Millionen Pixel – jeder Euro deckt einen Pixel
               auf. Ihr Beitrag gewährleistet das Fortbestehen unserer Arbeit.
               Vielen Dank für Ihre Spende.</span
             >
@@ -231,9 +231,7 @@
                     <td class="donor-list-amount">
                       €<%= order.formattedAmount %>
                     </td>
-                    <td class="donor-list-date">
-                      <%= order.formattedUpdatedAt %>
-                    </td>
+                    <td class="donor-list-date"><%= order.relativeDate %></td>
                   </tr>
                   <% }); %>
                 </tbody>

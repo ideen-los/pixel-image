@@ -1,18 +1,33 @@
 body#legal {
   background-color: #333;
+  font-size: 18px;
+  line-height: 160%;
+  font-weight: 200;
+}
+
+body#legal #content {
+  align-items: flex-start;
+}
+
+body#legal .back-link-wrapper {
+  width: 100%;
+  max-width: 1400px;
+  margin: 40px auto 0;
+}
+
+body#legal .back-link {
+  margin-bottom: 10px;
+  font-weight: 400;
 }
 
 body#legal main {
   align-items: flex-start;
   gap: 0;
 
-  margin-top: 50px;
-}
-
-body#legal .back-link {
-  margin-bottom: 10px;
+  max-width: 700px;
+  margin: 50px auto 0;
 }
 
 body#legal p {
-  max-width: 800px;
+  max-width: 700px;
 }

@@ -3,13 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fgdfg</title>
+    <title>Eulenmühle - Pferdeschutzverein PRO EQUIS e.V. - Vielen Dank!</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/success.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/img/ico/apple-touch-icon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/img/ico/favicon-32x32.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/img/ico/favicon-16x16.png" />
+    <link rel="manifest" href="/img/ico/site.webmanifest" />
   </head>
-  <body>
-    <h1>Eulenmühle Spende</h1>
-    Vielen Dank für Ihre Spende von <%= donationAmount %> <%= donationCurrency
-    %> an PRO EQUIS e.V. <br />Sie haben <%= donationAmount %> Pixel aufgedeckt!
+  <body id="success">
+    <div id="content">
+      <header>
+        <div class="logo-and-menu-wrapper">
+          <a class="eulenmuehle-link" href="https://www.eulenmuehle.de/">
+            <div class="eulenmuehle-logo">
+              <img src="/img/eulenmuehle-logo.svg" class="logo" /><img
+                src="/img/eulenmuehle-tag.svg"
+                class="tag" />
+            </div>
+          </a>
+          <div class="menu-wrapper">
+            <ul>
+              <li>
+                <a href="https://www.eulenmuehle-proequis.de/kontakt/"
+                  >Kontakt</a
+                >
+              </li>
+              <li><a href="impressum.ejs">Impressum</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
 
-    <script src="js/revealPixels.js"></script>
+      <main>
+        <div class="thank-you-wrapper">
+          <div class="thank-you-image-wrapper">
+            <img
+              class="thank-you-image"
+              src="/img/danke-fuer-spende_klein2.jpg"
+              alt="Danke für Ihre Spende!" />
+          </div>
+          <h1>Danke für Ihre Spende, Robert!</h1>
+
+          <div class="particletext hearts" id="heart-container"></div>
+        </div>
+        <a class="back-link" href="/">→ Zurück zur Spendenübersicht</a>
+      </main>
+    </div>
+
+    <script src="/js/successAnimation.js"></script>
   </body>
 </html>
