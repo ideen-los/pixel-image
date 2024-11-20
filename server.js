@@ -10,6 +10,7 @@ import {
   retrieveStripePayment,
 } from './controllers/stripeController.js';
 import Order from './models/Order.js';
+import { formatDateCustom } from './services/formatDate.js';
 
 dotenv.config();
 
@@ -75,21 +76,11 @@ app.get('/', async (req, res) => {
         formattedName = order.name;
       }
 
-      // FORMAT THE DATE OF THE ORDER
-      // Get the current date
-      let currentDate = new Date();
-      console.log(currentDate);
+      // Format the date of the order
+      let orderDate = new Date(order.updatedAt);
 
-      formattedDate = new Intl.DateTimeFormat('de-DE').format(
-        new Date(order.updatedAt)
-      );
-      console.log(new Date(order.updatedAt));
-
-      /* if (formattedDate === currentDate) {
-        formattedDate = "Heute";
-      } else if {
-        (formattedDate )
-      } */
+      // Format the order Date. Display the relative distance until 7 days ago. Then display the full date.
+      formattedDate = formatDateCustom(orderDate);
 
       return {
         ...order,
@@ -130,6 +121,11 @@ app.get('/complete-stripe', retrieveStripePayment);
 // If any order is canceled
 app.get('/cancel', (req, res) => {
   res.redirect('/');
+});
+
+// Legal notice
+app.get('/legal', (req, res) => {
+  res.render('legal');
 });
 
 /* Sync the database */

@@ -60,6 +60,24 @@ import Order from '../models/Order.js';
         createdAt: generateDate(4),
         updatedAt: generateDate(4),
       },
+      {
+        name: 'User 5',
+        amount: 400,
+        paymentMethod: 'paypal',
+        orderId: 'ORD006',
+        status: 'completed',
+        createdAt: generateDate(260),
+        updatedAt: generateDate(260),
+      },
+      {
+        name: 'User 6',
+        amount: 1000,
+        paymentMethod: 'paypal',
+        orderId: 'ORD007',
+        status: 'completed',
+        createdAt: generateDate(7),
+        updatedAt: generateDate(7),
+      },
     ];
 
     await Order.bulkCreate(orders);

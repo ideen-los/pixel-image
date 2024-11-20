@@ -25,15 +25,21 @@
     <div id="content">
       <header>
         <div class="logo-and-menu-wrapper">
-          <div class="eulenmuehle-logo">
-            <img src="/img/eulenmuehle-logo.svg" class="logo" /><img
-              src="/img/eulenmuehle-tag.svg"
-              class="tag" />
-          </div>
+          <a class="eulenmuehle-link" href="https://www.eulenmuehle.de/">
+            <div class="eulenmuehle-logo">
+              <img src="/img/eulenmuehle-logo.svg" class="logo" /><img
+                src="/img/eulenmuehle-tag.svg"
+                class="tag" />
+            </div>
+          </a>
           <div class="menu-wrapper">
             <ul>
-              <li>Kontakt</li>
-              <li>Impressum</li>
+              <li>
+                <a href="https://www.eulenmuehle-proequis.de/kontakt/"
+                  >Kontakt</a
+                >
+              </li>
+              <li><a href="/legal">Impressum</a></li>
             </ul>
           </div>
         </div>
@@ -183,28 +189,56 @@
                 <span class="no-donations"
                   >Noch keine Spenden. Seien Sie der/die Erste!</span
                 >
+                <% } else { %>
+                <div class="donor-list-total-amount">
+                  Gesamt:
+                  <span
+                    >€<%= cappedPixelsToReveal.toLocaleString('de-DE') %></span
+                  >
+                </div>
                 <% } %>
               </h3>
               <% if (numberOfOrders === 0) { %>
-              <div class="donor-and-donation-amount-wrapper">
-                <div class="donor">
-                  <span class="donor-icon"></span
-                  ><span class="donor-name">Hier könnte Ihr Name stehen</span>
-                </div>
-                <div class="donation-amount">€250</div>
-                <div class="donation-time">Heute</div>
-              </div>
+              <table class="donor-table">
+                <tbody>
+                  <tr class="donor-and-donation-amount-wrapper">
+                    <td class="donor-list-donor">
+                      <div class="donor">
+                        <span class="donor-icon"></span>
+                        <span class="donor-name"
+                          >Hier könnte Ihr Name stehen</span
+                        >
+                      </div>
+                    </td>
+                    <td class="donor-list-amount">€250</td>
+                    <td class="donor-list-date">Heute</td>
+                  </tr>
+                </tbody>
+              </table>
 
-              <% } else { %> <% orders.forEach(order => { %>
-              <div class="donor-and-donation-amount-wrapper">
-                <div class="donor">
-                  <span class="donor-icon"></span
-                  ><span class="donor-name"><%= order.name %></span>
-                </div>
-                <div class="donation-amount">€<%= order.formattedAmount %></div>
-                <div class="donation-time"><%= order.formattedUpdatedAt %></div>
-              </div>
-              <% }); %> <% } %>
+              <% } else { %>
+
+              <table class="donor-table">
+                <tbody>
+                  <% orders.forEach(function(order) { %>
+                  <tr class="donor-and-donation-amount-wrapper">
+                    <td class="donor-list-donor">
+                      <div class="donor">
+                        <span class="donor-icon"></span>
+                        <span class="donor-name"><%= order.name %></span>
+                      </div>
+                    </td>
+                    <td class="donor-list-amount">
+                      €<%= order.formattedAmount %>
+                    </td>
+                    <td class="donor-list-date">
+                      <%= order.formattedUpdatedAt %>
+                    </td>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <% } %>
             </div>
 
             <div class="spacer">&nbsp;</div>
@@ -216,7 +250,7 @@
     <canvas id="offscreenCanvas" width="1191" height="838"></canvas>
 
     <script>
-      window.pixelsRevealed = <%= cappedPixelsToReveal %>; // Make donation amount from database globally available
+      window.pixelsRevealed = '<%= cappedPixelsToReveal %>'; // Make donation amount from database globally available
     </script>
 
     <script src="/js/progressBar.js"></script>
