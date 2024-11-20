@@ -178,9 +178,24 @@
             <!-- Donor List -->
             <div id="donor-list">
               <h3 class="donor-list-headline">
-                Liste aller Spenden (<%= numberOfOrders %>)
+                Liste aller Spenden (<%= numberOfOrders %>) <% if
+                (numberOfOrders === 0) { %>
+                <span class="no-donations"
+                  >Noch keine Spenden. Seien Sie der/die Erste!</span
+                >
+                <% } %>
               </h3>
-              <% orders.forEach(order => { %>
+              <% if (numberOfOrders === 0) { %>
+              <div class="donor-and-donation-amount-wrapper">
+                <div class="donor">
+                  <span class="donor-icon"></span
+                  ><span class="donor-name">Hier könnte Ihr Name stehen</span>
+                </div>
+                <div class="donation-amount">€250</div>
+                <div class="donation-time">Heute</div>
+              </div>
+
+              <% } else { %> <% orders.forEach(order => { %>
               <div class="donor-and-donation-amount-wrapper">
                 <div class="donor">
                   <span class="donor-icon"></span
@@ -189,7 +204,7 @@
                 <div class="donation-amount">€<%= order.formattedAmount %></div>
                 <div class="donation-time"><%= order.formattedUpdatedAt %></div>
               </div>
-              <% }); %>
+              <% }); %> <% } %>
             </div>
 
             <div class="spacer">&nbsp;</div>

@@ -48,8 +48,11 @@ app.get('/', async (req, res) => {
       },
     });
 
+    // Check if donated amount is available or above 1.000.000
     let cappedPixelsToReveal;
-    if (pixelsToReveal > 1000000) {
+    if (!pixelsToReveal) {
+      cappedPixelsToReveal = 0;
+    } else if (pixelsToReveal > 1000000) {
       cappedPixelsToReveal = 1000000;
     } else {
       cappedPixelsToReveal = pixelsToReveal;
@@ -72,10 +75,21 @@ app.get('/', async (req, res) => {
         formattedName = order.name;
       }
 
-      // Format the date of the order
+      // FORMAT THE DATE OF THE ORDER
+      // Get the current date
+      let currentDate = new Date();
+      console.log(currentDate);
+
       formattedDate = new Intl.DateTimeFormat('de-DE').format(
         new Date(order.updatedAt)
       );
+      console.log(new Date(order.updatedAt));
+
+      /* if (formattedDate === currentDate) {
+        formattedDate = "Heute";
+      } else if {
+        (formattedDate )
+      } */
 
       return {
         ...order,
