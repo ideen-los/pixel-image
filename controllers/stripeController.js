@@ -7,14 +7,18 @@ dotenv.config();
 // Creates a Stripe session
 export const createStripeSession = async (req, res) => {
   try {
-    const name = req.body.name; // name of the donor
-    const amount = parseFloat(req.body.amount); // Convert the donation amount to a number
-    const positiveAmount = Math.abs(amount); // If the value is negative, convert it to positive
+    const donorName = req.body.name; // name of the donor
+    let donorEmail;
+    const donationAmount = parseFloat(req.body.amount); // Convert the donation amount to a number
+    const positiveAmount = Math.abs(donationAmount); // If the value is negative, convert it to positive
     const truncatedAmount = Math.trunc(positiveAmount); // If the value is a decimal, truncate it
 
+    if (req.body.email) {
+      donorEmail = req.body.email;
+    }
+
     if (!truncatedAmount || truncatedAmount == 0 || truncatedAmount == '') {
-      res.redirect('/');
-      return;
+      return res.redirect('/');
     } else {
       const session = await createSession(truncatedAmount);
       const url = session.url;
@@ -22,7 +26,8 @@ export const createStripeSession = async (req, res) => {
 
       // Save donor data in the database
       const newOrder = await Order.create({
-        name,
+        name: donorName,
+        email: donorEmail,
         amount: truncatedAmount,
         paymentMethod: 'stripe',
         orderId: id,
@@ -36,7 +41,8 @@ export const createStripeSession = async (req, res) => {
     }
   } catch (error) {
     console.error('Error in /pay-stripe route:', error);
-    res
+
+    return res
       .status(500)
       .send(
         'An error occurred while processing your payment. Please try again later.'
@@ -49,7 +55,11 @@ export const retrieveStripePayment = async (req, res) => {
   const sessionId = req.query.session_id;
 
   if (!sessionId) {
-    return res.status(400).send('Session ID is missing.');
+    console.error('Stripe session ID not found.');
+    let errorTitle = '400 Bad Request';
+    let errorText =
+      'Diese Seite funktioniert nur, wenn Sie direkt nach der Zahlung von Stripe hierher weitergeleitet werden.';
+    return res.status(400).render('error', { errorTitle, errorText });
   }
 
   try {
@@ -76,20 +86,22 @@ export const retrieveStripePayment = async (req, res) => {
         // 2. Update the order status from 'pending' to 'complete'
         order.status = 'completed';
         await order.save();
-        console.log('Order updated to "completed"!');
       }
 
-      res.render('donationSuccess', {
+      return res.render('donationSuccess', {
         order,
         donationAmount,
         donationCurrency,
       });
     } else {
       // Payment not completed
-      res.send('Payment not completed. Please try again.');
+      return res.send('Payment not completed. Please try again.');
     }
   } catch (error) {
-    console.error('Error retrieving Stripe session:', error);
-    res.status(500).send('Internal Server Error');
+    console.error('Error while retrieving stripe seission ID: ', error);
+    let errorTitle = '400 Bad Request';
+    let errorText =
+      'Diese Seite funktioniert nur, wenn Sie direkt nach der Zahlung von Stripe hierher weitergeleitet werden.';
+    return res.status(400).render('error', { errorTitle, errorText });
   }
 };

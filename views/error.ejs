@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Eulenmühle - Pferdeschutzverein PRO EQUIS e.V. - <%= errorTitle %>
+    </title>
+    <link rel="stylesheet" href="/css/dist/style.css" />
+    <link rel="stylesheet" href="/css/dist/error.css" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/img/ico/apple-touch-icon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/img/ico/favicon-32x32.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/img/ico/favicon-16x16.png" />
+    <link rel="manifest" href="/img/ico/site.webmanifest" />
+  </head>
+  <body id="error">
+    <div id="content">
+      <header>
+        <div class="logo-and-menu-wrapper">
+          <a class="eulenmuehle-link" href="https://www.eulenmuehle.de/">
+            <div class="eulenmuehle-logo">
+              <img src="/img/eulenmuehle-logo.svg" class="logo" /><img
+                src="/img/eulenmuehle-tag.svg"
+                class="tag" />
+            </div>
+          </a>
+          <div class="menu-wrapper">
+            <ul>
+              <li>
+                <a href="https://www.eulenmuehle-proequis.de/kontakt/"
+                  >Kontakt</a
+                >
+              </li>
+              <li><a href="impressum.ejs">Impressum</a></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+
+      <main>
+        <h1><%= errorTitle %></h1>
+        <p><%= errorText %></p>
+        <a class="back-link" href="/">→ Zurück zur Spendenübersicht</a>
+      </main>
+    </div>
+  </body>
+</html>

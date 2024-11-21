@@ -17,6 +17,7 @@ import Order from '../models/Order.js';
     const orders = [
       {
         name: 'User 1',
+        email: 'User1@email.com',
         amount: 120,
         paymentMethod: 'paypal',
         orderId: 'ORD001',
@@ -26,6 +27,7 @@ import Order from '../models/Order.js';
       },
       {
         name: 'User 2',
+        email: 'User2@email.com',
         amount: 250,
         paymentMethod: 'stripe',
         orderId: 'ORD002',
@@ -44,6 +46,7 @@ import Order from '../models/Order.js';
       },
       {
         name: 'User 4',
+        email: 'User4email.com',
         amount: 180,
         paymentMethod: 'stripe',
         orderId: 'ORD004',
@@ -61,16 +64,18 @@ import Order from '../models/Order.js';
         updatedAt: generateDate(4),
       },
       {
-        name: 'User 5',
-        amount: 400,
-        paymentMethod: 'paypal',
+        name: 'User 6',
+        email: 'User6@email.com',
+        amount: 450,
+        paymentMethod: 'stripe',
         orderId: 'ORD006',
         status: 'completed',
         createdAt: generateDate(260),
         updatedAt: generateDate(260),
       },
       {
-        name: 'User 6',
+        name: 'User 7',
+        email: 'User7@email.com',
         amount: 1000,
         paymentMethod: 'paypal',
         orderId: 'ORD007',

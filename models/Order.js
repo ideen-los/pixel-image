@@ -3,6 +3,10 @@ import sequelize from '../db.js';
 
 const Order = sequelize.define('Order', {
   name: { type: DataTypes.STRING, allowNull: false },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
   amount: { type: DataTypes.INTEGER, allowNull: false },
   paymentMethod: {
     type: DataTypes.STRING,

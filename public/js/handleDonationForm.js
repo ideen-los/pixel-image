@@ -1,6 +1,9 @@
 const form = document.getElementById('donationForm');
 const donationAmountInputs = form.querySelectorAll('.amount-wrapper input');
 const donationAmountField = document.getElementById('donationAmountField');
+const newsletterCheckbox = form.querySelector('.newsletter-checkbox');
+const emailInputWrapper = form.querySelector('.email-field-wrapper');
+const emailInput = document.getElementById('emailField');
 
 /* Checks if a radio input field is checked.
  * Returns true or false. */
@@ -67,4 +70,18 @@ donationAmountInputs.forEach((input) => {
 donationAmountField.addEventListener('input', () => {
   uncheckDonationAmountInputs();
   setSubmitButtonTextContent(donationAmountField.value);
+});
+
+newsletterCheckbox.addEventListener('change', function () {
+  if (this.checked) {
+    if (!emailInputWrapper.classList.contains('is-checked')) {
+      emailInputWrapper.classList.add('is-checked');
+      emailInput.value = '';
+    }
+  } else {
+    if (emailInputWrapper.classList.contains('is-checked')) {
+      emailInputWrapper.classList.remove('is-checked');
+      emailInput.value = '';
+    }
+  }
 });

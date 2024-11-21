@@ -7,12 +7,15 @@ dotenv.config();
 // Creates a PayPal order
 export const createPaypalOrder = async (req, res) => {
   try {
-    const name = req.body.name; // name of the donor
-    const amount = parseFloat(req.body.amount); // Convert the donation amount to a number
-    console.log('req.body.amount: ', amount);
-    const positiveAmount = Math.abs(amount); // If the value is negative, convert it to positive
+    const donorName = req.body.name; // name of the donor
+    let donorEmail;
+    const donationAmount = parseFloat(req.body.amount); // Convert the donation amount to a number
+    const positiveAmount = Math.abs(donationAmount); // If the value is negative, convert it to positive
     const truncatedAmount = Math.trunc(positiveAmount); // If the value is a decimal, truncate it
-    console.log('req.body:', req.body);
+
+    if (req.body.email) {
+      donorEmail = req.body.email;
+    }
 
     if (!truncatedAmount || truncatedAmount == 0 || truncatedAmount == '') {
       res.redirect('/');
@@ -24,7 +27,8 @@ export const createPaypalOrder = async (req, res) => {
 
       // Save donor data in the database
       const newOrder = await Order.create({
-        name,
+        name: donorName,
+        email: donorEmail,
         amount: truncatedAmount,
         paymentMethod: 'paypal',
         orderId: id,
@@ -32,13 +36,14 @@ export const createPaypalOrder = async (req, res) => {
       });
 
       if (!url) {
-        throw new Error('Approval URL not found');
+        console.error('Approval URL not found');
+        return res.status(500).send('Approval URL not found');
       }
       res.redirect(url);
     }
   } catch (error) {
-    console.error('Error in /donate route:', error);
-    res
+    console.error('Error in /pay-paypal route:', error);
+    return res
       .status(500)
       .send(
         'An error occurred while processing your payment. Please try again later.'
@@ -50,7 +55,6 @@ export const createPaypalOrder = async (req, res) => {
 export const capturePaypalPayment = async (req, res) => {
   try {
     const paymentData = await capturePayment(req.query.token);
-    console.log('paypal payment data:', paymentData);
 
     // Get the order id
     const id = paymentData.id;
@@ -69,14 +73,14 @@ export const capturePaypalPayment = async (req, res) => {
 
       if (!order) {
         console.log('Order not found!');
+        return;
       } else {
         // 2. Update the order status from 'pending' to 'complete'
         order.status = 'completed';
         await order.save();
-        console.log('Order updated to "completed"!');
       }
 
-      res.render('donationSuccess', {
+      return res.render('donationSuccess', {
         order,
         donationAmount,
         donationCurrency,
@@ -86,6 +90,9 @@ export const capturePaypalPayment = async (req, res) => {
       res.send('Payment not completed. Please try again.');
     }
   } catch (error) {
-    res.send('Error: ' + error);
+    let errorTitle = '400 Bad Request';
+    let errorText =
+      'Diese Seite funktioniert nur, wenn Sie direkt nach der Zahlung von Paypal hierher weitergeleitet werden.';
+    return res.status(400).render('error', { errorTitle, errorText });
   }
 };

@@ -72,7 +72,7 @@ export const displayOrdersFromDatabase = async function (req, res) {
       };
     });
 
-    res.render('index', {
+    return res.render('index', {
       totalDonations,
       cappedPixelsToReveal,
       numberOfOrders,
@@ -80,5 +80,6 @@ export const displayOrdersFromDatabase = async function (req, res) {
     });
   } catch (error) {
     console.log('Unable to load orders: ', error);
+    return;
   }
 };

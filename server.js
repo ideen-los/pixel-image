@@ -10,6 +10,7 @@ import {
   retrieveStripePayment,
 } from './controllers/stripeController.js';
 import { displayOrdersFromDatabase } from './controllers/homeController.js';
+import { notFoundHandler } from './controllers/404Controller.js';
 
 dotenv.config();
 
@@ -54,12 +55,15 @@ app.get('/legal', (req, res) => {
   res.render('legal');
 });
 
+// 404 Errors
+app.use(notFoundHandler);
+
 /* Sync the database */
 sequelize
   .sync()
   .then(() => {
     console.log('Database synchronized');
-    app.listen(3000, () => console.log('Server started on port 3000'));
+    app.listen(3300, () => console.log('Server started on port 3300'));
   })
   .catch((error) => {
     console.error('Failed to synchronize database: ', error);

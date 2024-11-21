@@ -383,7 +383,7 @@ main::before {
 #donationForm {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 9px;
 }
 
 @media (max-width: 1130px) {
@@ -446,13 +446,14 @@ body#home label:hover {
 
 /* Text & Number Input */
 body#home input[type='text'],
+body#home input[type='email'],
 body#home .donation-field-wrapper {
   padding: 10px;
 
   font-family: 'Custom Font';
 
   background-color: transparent;
-  border: 3px solid #658c7c;
+  border: 3px solid #6ea190;
   border-radius: 4px;
 }
 
@@ -541,20 +542,26 @@ body#home .payment-method-wrapper #stripeButton + label > div {
   display: flex;
 }
 
-/* Donor Name Field */
-body#home form #donorName {
+/* Donor Name Field & Hidden Email Field */
+body#home form #donorName,
+body#home form #emailField {
   width: 100%;
   padding: 12.5px;
   color: #fff;
 }
-body#home form #donorName:focus {
+body#home form #donorName:focus,
+body#home form #emailField:focus {
   outline: none;
   border-color: #fff;
 }
 body#home form #donorName:is(:-webkit-autofill, :autofill),
 body#home form #donorName:is(:-webkit-autofill, :autofill):hover,
 body#home form #donorName:is(:-webkit-autofill, :autofill):focus,
-body#home form #donorName:is(:-webkit-autofill, :autofill):active {
+body#home form #donorName:is(:-webkit-autofill, :autofill):active,
+body#home form #emailField:is(:-webkit-autofill, :autofill),
+body#home form #emailField:is(:-webkit-autofill, :autofill):hover,
+body#home form #emailField:is(:-webkit-autofill, :autofill):focus,
+body#home form #emailField:is(:-webkit-autofill, :autofill):active {
   -webkit-box-shadow: none;
   -webkit-text-fill-color: #ffffff;
   transition: background-color 5000s ease-in-out 0s;
@@ -562,6 +569,7 @@ body#home form #donorName:is(:-webkit-autofill, :autofill):active {
 
 span.description {
   display: flex;
+  align-items: center;
   gap: 3px;
 
   font-size: 13px;
@@ -577,22 +585,105 @@ span.description span.info {
   mask-repeat: no-repeat;
 }
 
-body#home form #donorName::placeholder {
+body#home form #donorName::placeholder,
+body#home form #emailField::placeholder {
   color: #6b9584;
   font-weight: var(--bold);
 }
 
-/* Submit Button */
+/* NEWSLETTER CHECKBOX */
+body#home .checkbox-container {
+  display: block;
+  position: relative;
+
+  padding: 0 0 0 35px;
+  margin: 6px 0 0;
+
+  color: #eaeaea;
+  font-weight: 400;
+  font-size: 16px;
+
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+}
+
+body#home .checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+body#home .checkmark {
+  position: absolute;
+  top: 3px;
+  left: 0;
+
+  height: 25px;
+  width: 25px;
+
+  border: 3px solid #6ea190;
+  border-radius: 2px;
+}
+
+/* Email Field Wrapper */
+body#home .email-field-wrapper {
+  display: none;
+}
+
+body#home .email-field-wrapper.is-checked {
+  display: block;
+}
+
+/* On mouse-over, add a grey background color */
+body#home .checkbox-container:hover input ~ .checkmark {
+  border-color: #fff;
+}
+
+/* When the checkbox is checked, add a blue background */
+body#home .checkbox-container input:checked ~ .checkmark {
+  background-color: #fff;
+  border-color: #fff;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+body#home .checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+body#home .checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+body#home .checkbox-container .checkmark:after {
+  left: 5px;
+  top: 1px;
+
+  width: 5px;
+  height: 10px;
+
+  border: solid #4e7a6a;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* SUBMIT BUTTON */
 body#home form button[type='submit'] {
   width: 100%;
+  margin: 8px 0 0;
   padding: 16px;
-  border: none;
 
   font-weight: var(--bold);
   font-size: 1.1rem;
   line-height: 1;
 
-  /* background-color: #ffe000; */
   background-image: linear-gradient(30deg, #ffe000 50%, #00b93e 50%);
   background-size: 300% 100%;
   background-repeat: no-repeat;
