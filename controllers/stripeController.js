@@ -1,4 +1,5 @@
 import Order from '../models/Order.js';
+import { getAndSanitizeFormData } from '../services/getFormData.js';
 import { createSession, stripe } from '../services/stripe.js';
 import dotenv from 'dotenv';
 
@@ -7,20 +8,15 @@ dotenv.config();
 // Creates a Stripe session
 export const createStripeSession = async (req, res) => {
   try {
-    const donorName = req.body.name; // name of the donor
-    let donorEmail;
-    const donationAmount = parseFloat(req.body.amount); // Convert the donation amount to a number
-    const positiveAmount = Math.abs(donationAmount); // If the value is negative, convert it to positive
-    const truncatedAmount = Math.trunc(positiveAmount); // If the value is a decimal, truncate it
+    const { donorName, donorEmail, donationAmount } = getAndSanitizeFormData(
+      req,
+      res
+    );
 
-    if (req.body.email) {
-      donorEmail = req.body.email;
-    }
-
-    if (!truncatedAmount || truncatedAmount == 0 || truncatedAmount == '') {
+    if (!donationAmount || donationAmount == 0 || donationAmount == '') {
       return res.redirect('/');
     } else {
-      const session = await createSession(truncatedAmount);
+      const session = await createSession(donationAmount);
       const url = session.url;
       const id = session.id;
 
@@ -28,7 +24,7 @@ export const createStripeSession = async (req, res) => {
       const newOrder = await Order.create({
         name: donorName,
         email: donorEmail,
-        amount: truncatedAmount,
+        amount: donationAmount,
         paymentMethod: 'stripe',
         orderId: id,
         status: 'pending',

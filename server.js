@@ -12,13 +12,19 @@ import {
 import { displayOrdersFromDatabase } from './controllers/homeController.js';
 import { notFoundHandler } from './controllers/404Controller.js';
 
+/* IMPORT .ENV */
 dotenv.config();
 
+/* INITIALIZE EXPRESS APPLICATION WITH ESSENTIAL MIDDLEWARE: */
+// Parses JSON request bodies
+// Parses URL-encoded request bodies (e.g. from form submissions)
+// Serves static assets from the 'public' directory
 const app = express();
 app.use(express.json());
-app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
+/* DEFINE EJS AS RENDER ENGINE */
 app.set('view engine', 'ejs');
 
 /* ROUTES */
@@ -27,13 +33,16 @@ app.get('/', async (req, res) => {
   displayOrdersFromDatabase(req, res);
 });
 
+// Donation route: redirect to PayPal or Stripe payment pages
 app.post('/donate', async (req, res) => {
   if (req.body.paymentMethod === 'paypal') {
     await createPaypalOrder(req, res);
   } else if (req.body.paymentMethod === 'stripe') {
     await createStripeSession(req, res);
   } else {
-    res.send('Fehler: Keine Zahlungsart ausgewählt.');
+    let errorTitle = 'Fehler';
+    let errorText = 'Zahlungsart nicht erlaubt.';
+    return res.render('error', { errorTitle, errorText });
   }
 });
 
@@ -58,12 +67,12 @@ app.get('/legal', (req, res) => {
 // 404 Errors
 app.use(notFoundHandler);
 
-/* Sync the database */
+/* SYNC THE DATABASE */
 sequelize
   .sync()
   .then(() => {
     console.log('Database synchronized');
-    app.listen(3300, () => console.log('Server started on port 3300'));
+    app.listen(3000, () => console.log('Server started on port 3300'));
   })
   .catch((error) => {
     console.error('Failed to synchronize database: ', error);

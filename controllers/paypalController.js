@@ -1,27 +1,23 @@
 import { capturePayment, createOrder } from '../services/paypal.js';
 import Order from '../models/Order.js';
 import dotenv from 'dotenv';
+import { getAndSanitizeFormData } from '../services/getFormData.js';
 
 dotenv.config();
 
 // Creates a PayPal order
 export const createPaypalOrder = async (req, res) => {
   try {
-    const donorName = req.body.name; // name of the donor
-    let donorEmail;
-    const donationAmount = parseFloat(req.body.amount); // Convert the donation amount to a number
-    const positiveAmount = Math.abs(donationAmount); // If the value is negative, convert it to positive
-    const truncatedAmount = Math.trunc(positiveAmount); // If the value is a decimal, truncate it
+    const { donorName, donorEmail, donationAmount } = getAndSanitizeFormData(
+      req,
+      res
+    );
 
-    if (req.body.email) {
-      donorEmail = req.body.email;
-    }
-
-    if (!truncatedAmount || truncatedAmount == 0 || truncatedAmount == '') {
+    if (!donationAmount || donationAmount == 0 || donationAmount == '') {
       res.redirect('/');
       return;
     } else {
-      const result = await createOrder(truncatedAmount);
+      const result = await createOrder(donationAmount);
       const url = result.url;
       const id = result.id;
 
@@ -29,7 +25,7 @@ export const createPaypalOrder = async (req, res) => {
       const newOrder = await Order.create({
         name: donorName,
         email: donorEmail,
-        amount: truncatedAmount,
+        amount: donationAmount,
         paymentMethod: 'paypal',
         orderId: id,
         status: 'pending',

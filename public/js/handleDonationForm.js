@@ -45,7 +45,7 @@ function setSubmitButtonTextContent(amount) {
   }
 }
 
-/* Sets the value of the donation amount input fieldto the
+/* Sets the value of the donation amount input field to the
  * amount selected via the donation amount radio inputs. */
 function setDonationAmount(input) {
   if (isChecked(input)) {
@@ -77,11 +77,13 @@ newsletterCheckbox.addEventListener('change', function () {
     if (!emailInputWrapper.classList.contains('is-checked')) {
       emailInputWrapper.classList.add('is-checked');
       emailInput.value = '';
+      emailInput.required = true;
     }
   } else {
     if (emailInputWrapper.classList.contains('is-checked')) {
       emailInputWrapper.classList.remove('is-checked');
       emailInput.value = '';
+      emailInput.required = false;
     }
   }
 });
