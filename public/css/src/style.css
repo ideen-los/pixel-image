@@ -678,6 +678,7 @@ body#home form button[type='submit'] {
   margin: 8px 0 0;
   padding: 16px;
 
+  color: #000;
   font-weight: var(--bold);
   font-size: 1.1rem;
   line-height: 1;
