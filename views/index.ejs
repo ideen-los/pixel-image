@@ -93,6 +93,7 @@
               <div class="form-wrapper">
                 <!-- Donation Form -->
                 <form id="donationForm" method="post" action="/donate">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
                   <!-- Amount -->
                   <div class="amount-wrapper">
                     <input
@@ -269,11 +270,15 @@
     </div>
 
     <canvas id="offscreenCanvas" width="1191" height="838"></canvas>
+    <div
+      id="pixel-data"
+      data-pixels-revealed="<%= cappedPixelsToReveal %>"></div>
 
-    <script>
-      window.pixelsRevealed = '<%= cappedPixelsToReveal %>'; // Make donation amount from database globally available
-    </script>
+    <!-- <script>
+      window.pixelsRevealed = '<%= cappedPixelsToReveal %>'; 
+    </script> -->
 
+    <script src="/js/getPixels.js"></script>
     <script src="/js/progressBar.js"></script>
     <script src="/js/revealPixels.js"></script>
     <script src="/js/handleDonationForm.js"></script>
