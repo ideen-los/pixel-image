@@ -117,6 +117,11 @@ header {
   padding: 6px 0;
 }
 
+@media (max-width: 1199px) {
+  .logo-and-menu-wrapper {
+    max-width: 910px;
+  }
+}
 @media (max-width: 640px) {
   .logo-and-menu-wrapper {
     flex-direction: column;
@@ -170,6 +175,12 @@ main {
   max-width: 1400px;
 }
 
+@media (max-width: 1199px) {
+  main {
+    max-width: 910px;
+  }
+}
+
 main::before {
   display: block;
   position: absolute;
@@ -183,12 +194,12 @@ main::before {
   background-color: #333;
   z-index: -1;
 }
-/* 
-@media (max-width: 1130px) {
+
+@media (max-width: 1199px) {
   main::before {
-    height: 1200px;
+    height: 900px;
   }
-} */
+}
 
 /* HEADLINE
 =============================================================================================== */
@@ -312,7 +323,7 @@ main::before {
   box-shadow: 0px 25px 66px -39px rgba(0, 0, 0, 0.45);
 }
 
-@media (max-width: 1130px) {
+@media (max-width: 1199px) {
   .canvas-and-donation-form {
     flex-direction: column;
   }
@@ -345,17 +356,29 @@ main::before {
   backdrop-filter: blur(10px);
 }
 
-@media (max-width: 1130px) {
+@media (max-width: 1315px) {
   .equis-logo-and-form {
+    gap: 14px;
+  }
+}
+@media (max-width: 1199px) {
+  .equis-logo-and-form {
+    gap: 20px;
     max-width: 100%;
     padding: 30px;
+
     background-color: rgba(69, 115, 99, 1);
+  }
+}
+@media (max-width: 640px) {
+  .equis-logo-and-form {
+    padding: 20px;
   }
 }
 
 /* PRO EQUIS Logo
 =============================================================================================== */
-@media (max-width: 1130px) {
+@media (max-width: 1199px) {
   .pro-equis-logo {
     max-width: 600px;
     margin: 0 auto;
@@ -369,9 +392,31 @@ main::before {
   max-width: 100px;
 }
 
+@media (max-width: 1315px) {
+  .pro-equis-logo img {
+    max-width: 70px;
+  }
+}
+@media (max-width: 1199px) {
+  .pro-equis-logo img {
+    max-width: 100px;
+  }
+}
+
 .pro-equis-logo span {
   font-size: 0.9rem;
   font-weight: 400;
+}
+
+@media (max-width: 1315px) {
+  .pro-equis-logo span {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 1199px) {
+  .pro-equis-logo span {
+    font-size: 0.9rem;
+  }
 }
 
 .pro-equis-logo span > span {
@@ -386,8 +431,14 @@ main::before {
   gap: 9px;
 }
 
-@media (max-width: 1130px) {
+@media (max-width: 1315px) {
   #donationForm {
+    gap: 6px;
+  }
+}
+@media (max-width: 1199px) {
+  #donationForm {
+    gap: 9px;
     max-width: 600px;
     margin: 0 auto;
   }
@@ -410,6 +461,17 @@ body#home label {
   cursor: pointer;
   user-select: none;
   border-radius: 4px;
+}
+
+@media (max-width: 1315px) {
+  body#home label {
+    padding: 10px 0;
+  }
+}
+@media (max-width: 1199px) {
+  body#home label {
+    padding: 12px 0;
+  }
 }
 
 /* Hide Normal Radio Buttons */
@@ -446,8 +508,6 @@ body#home label:hover {
 body#home input[type='text'],
 body#home input[type='email'],
 body#home .donation-field-wrapper {
-  padding: 10px;
-
   font-family: 'Custom Font';
 
   background-color: transparent;
@@ -466,7 +526,20 @@ body#home form .donation-field-wrapper {
   display: flex;
   align-items: center;
   gap: 6px;
+
+  padding: 10px;
   font-size: 1.2rem;
+}
+
+@media (max-width: 1315px) {
+  body#home form .donation-field-wrapper {
+    padding: 6px 10px;
+  }
+}
+@media (max-width: 1199px) {
+  body#home form .donation-field-wrapper {
+    padding: 10px;
+  }
 }
 
 body#home .donation-field-wrapper:focus-within {
@@ -477,7 +550,6 @@ body#home .donation-field-wrapper:focus-within {
 body#home form #donationAmountField {
   width: 100%;
   flex: 1;
-  padding: 0;
 
   font-family: 'Custom Font';
   font-size: 1.2rem;
@@ -544,7 +616,7 @@ body#home .payment-method-wrapper #stripeButton + label > div {
 body#home form #donorName,
 body#home form #emailField {
   width: 100%;
-  padding: 12.5px;
+  padding: 12.5px 10px;
   color: #fff;
 }
 body#home form #donorName:focus,
@@ -563,6 +635,19 @@ body#home form #emailField:is(:-webkit-autofill, :autofill):active {
   -webkit-box-shadow: none;
   -webkit-text-fill-color: #ffffff;
   transition: background-color 5000s ease-in-out 0s;
+}
+
+@media (max-width: 1315px) {
+  body#home form #donorName,
+  body#home form #emailField {
+    padding: 9.5px 10px;
+  }
+}
+@media (max-width: 1199px) {
+  body#home form #donorName,
+  body#home form #emailField {
+    padding: 12.5px 10px;
+  }
 }
 
 span.description {
@@ -607,6 +692,17 @@ body#home .checkbox-container {
   user-select: none;
 }
 
+@media (max-width: 1315px) {
+  body#home .checkbox-container {
+    font-size: 15px;
+  }
+}
+@media (max-width: 1199px) {
+  body#home .checkbox-container {
+    font-size: 16px;
+  }
+}
+
 body#home .checkbox-container input {
   position: absolute;
   opacity: 0;
@@ -625,6 +721,12 @@ body#home .checkmark {
 
   border: 3px solid #6ea190;
   border-radius: 2px;
+}
+
+@media (max-width: 1199px) {
+  body#home .checkmark {
+    top: 0;
+  }
 }
 
 /* Email Field Wrapper */
@@ -697,6 +799,17 @@ body#home form button[type='submit'] {
   transition: background 300ms ease-in-out, color ease-in-out 150ms;
 }
 
+@media (max-width: 1315px) {
+  body#home form button[type='submit'] {
+    padding: 13px;
+  }
+}
+@media (max-width: 1199) {
+  body#home form button[type='submit'] {
+    padding: 16px;
+  }
+}
+
 body#home form button[type='submit']:hover {
   background-position: 100% 0%;
   color: #fff;
@@ -714,7 +827,7 @@ body#home form button[type='submit']:hover {
   max-width: 300px;
 }
 
-@media (max-width: 1130px) {
+@media (max-width: 1199px) {
   .donor-list-and-spacer .spacer {
     display: none;
   }
@@ -804,4 +917,11 @@ span.no-donations,
   background-repeat: no-repeat;
   background-color: #91b8ab;
   border-radius: 50%;
+}
+
+/* Hidden Donation Amount Data
+=============================================================================================== */
+#pixel-data {
+  visibility: hidden;
+  opacity: 0;
 }
