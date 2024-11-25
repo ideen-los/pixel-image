@@ -29,7 +29,22 @@ const app = express();
 // Disable 'X-Powered-By' header (gives away information about server config)
 app.disable('x-powered-by');
 // Use helmet to secure Express headers
-app.use(helmet());
+app.use(
+  helmet(
+    helmet({
+      contentSecurityPolicy: {
+        directives: {
+          defaultSrc: ["'self'"],
+          scriptSrc: ["'self'"],
+          styleSrc: ["'self'"],
+          imgSrc: ["'self'"],
+          connectSrc: ["'self'"],
+          formAction: ["'self'"],
+        },
+      },
+    })
+  )
+);
 
 // Apply rate limiting to all requests
 const limiter = rateLimit({
