@@ -12,7 +12,6 @@ import {
 import { displayOrdersFromDatabase } from './controllers/homeController.js';
 import { notFoundHandler } from './controllers/404Controller.js';
 import helmet from 'helmet';
-import crypto from 'crypto';
 import rateLimit from 'express-rate-limit';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
@@ -90,6 +89,7 @@ app.use(
     cookie: {
       httpOnly: true, // Mitigates risk of client side script accessing the protected cookie
       secure: process.env.NODE_ENV === 'production' ? true : false, // Ensures the browser only sends the cookie over HTTPS
+      sameSite: 'lax',
       maxAge: 60 * 60 * 1000, // 1 hour
     },
   })

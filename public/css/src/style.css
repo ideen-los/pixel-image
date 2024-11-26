@@ -133,6 +133,11 @@ header {
 }
 
 /* Eulenmühle Logo */
+.eulenmuehle-logo {
+  display: flex;
+  align-items: flex-end;
+}
+
 .eulenmuehle-link::before {
   visibility: hidden;
   opacity: 0;
@@ -143,10 +148,12 @@ header {
 }
 
 .eulenmuehle-logo .logo {
+  flex-shrink: 0;
   max-width: 36px;
 }
 
 .eulenmuehle-logo .tag {
+  flex-shrink: 0;
   max-width: 120px;
   margin-left: 10px;
 }
@@ -234,6 +241,12 @@ main::before {
 .headline h1 span {
   color: #f16e1d;
   font-weight: 380;
+}
+
+@media (max-width: 640px) {
+  .headline h1 span {
+    display: block;
+  }
 }
 
 .headline .headline-description {
