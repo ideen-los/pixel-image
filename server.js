@@ -24,6 +24,9 @@ dotenv.config();
 /* INITIALIZE EXPRESS APPLICATION */
 const app = express();
 
+/* TRUST FIRST PROXY */
+app.set('trust proxy', 1);
+
 /* SECURITY MIDDLEWARE */
 // Disable 'X-Powered-By' header (gives away information about server config)
 app.disable('x-powered-by');
@@ -88,7 +91,7 @@ app.use(
     saveUninitialized: false, // Don't create session until something stored
     cookie: {
       httpOnly: true, // Mitigates risk of client side script accessing the protected cookie
-      secure: process.env.NODE_ENV === 'production' ? true : false, // Ensures the browser only sends the cookie over HTTPS
+      secure: process.env.NODE_ENV === 'production', // Ensures the browser only sends the cookie over HTTPS
       sameSite: 'lax',
       maxAge: 60 * 60 * 1000, // 1 hour
     },
@@ -116,6 +119,13 @@ app.use(
 // Pass CSRF token to views
 app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
+  next();
+});
+
+// CSFR logging
+app.use((req, res, next) => {
+  console.log('Incoming CSRF Token:', req.body._csrf);
+  console.log('Session CSRF Token:', req.session.csrfToken);
   next();
 });
 
