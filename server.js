@@ -65,19 +65,6 @@ app.use(express.json());
 // ParsesURL-encoded request bodies (e.g. from form submissions)
 app.use(express.urlencoded({ extended: true }));
 
-/* SERVE STATIC ASSETS FROM THE 'public' DIRECTORY */
-app.use(express.static('public', { index: false, dotfiles: 'ignore' }));
-
-/* DEFINE EJS AS RENDER ENGINE */
-app.set('view engine', 'ejs');
-
-// CSFR logging
-app.use((req, res, next) => {
-  console.log('Incoming CSRF Token:', req.body._csrf);
-  console.log('Session CSRF Token:', req.session.csrfToken);
-  next();
-});
-
 /* SETUP COOKIE PARSER FOR CSRF */
 app.use(cookieParser());
 
@@ -105,6 +92,13 @@ app.use(
   })
 );
 
+/* CSFR Logging Middleware */
+app.use((req, res, next) => {
+  console.log('Incoming CSRF Token:', req.body._csrf);
+  console.log('Session CSRF Token:', req.session.csrfToken);
+  next();
+});
+
 /* SETUP CSRF PROTECTION */
 app.use(
   lusca({
@@ -121,6 +115,12 @@ app.use(
     xssProtection: true,
   })
 );
+
+/* SERVE STATIC ASSETS FROM THE 'public' DIRECTORY */
+app.use(express.static('public', { index: false, dotfiles: 'ignore' }));
+
+/* DEFINE EJS AS RENDER ENGINE */
+app.set('view engine', 'ejs');
 
 /* ROUTES */
 // Pass CSRF token to views
