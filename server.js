@@ -85,7 +85,7 @@ app.use(
     saveUninitialized: false, // Don't create session until something stored
     cookie: {
       httpOnly: true, // Mitigates risk of client side script accessing the protected cookie
-      secure: process.env.NODE_ENV === 'production', // Ensures the browser only sends the cookie over HTTPS
+      secure: false, // Ensures the browser only sends the cookie over HTTPS
       sameSite: 'lax',
       maxAge: 60 * 60 * 1000, // 1 hour
     },
