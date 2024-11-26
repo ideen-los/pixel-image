@@ -111,8 +111,10 @@ app.use(
 
 /* CSFR Logging Middleware */
 app.use((req, res, next) => {
-  console.log('Incoming CSRF Token:', req.body._csrf);
-  console.log('Session CSRF Token:', req.session.csrfToken);
+  if (['POST', 'PUT', 'DELETE'].includes(req.method)) {
+    console.log('Incoming CSRF Token:', req.body._csrf);
+    console.log('Session CSRF Token:', req.session.csrfToken);
+  }
   next();
 });
 
