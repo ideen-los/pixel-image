@@ -116,6 +116,13 @@ app.use((req, res, next) => {
   next();
 });
 
+/* HTTPS LOGGING */
+app.use((req, res, next) => {
+  console.log('Request Protocol:', req.protocol);
+  console.log('X-Forwarded-Proto:', req.headers['x-forwarded-proto']);
+  next();
+});
+
 /* SERVE STATIC ASSETS FROM THE 'public' DIRECTORY */
 app.use(express.static('public', { index: false, dotfiles: 'ignore' }));
 
