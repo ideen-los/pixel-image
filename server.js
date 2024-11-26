@@ -85,7 +85,7 @@ app.use(
     saveUninitialized: false, // Don't create session until something stored
     cookie: {
       httpOnly: true, // Mitigates risk of client side script accessing the protected cookie
-      secure: false, // Ensures the browser only sends the cookie over HTTPS
+      secure: true, // Ensures the browser only sends the cookie over HTTPS
       sameSite: 'lax',
       maxAge: 60 * 60 * 1000, // 1 hour
     },
@@ -108,22 +108,6 @@ app.use(
     xssProtection: true,
   })
 );
-
-/* CSFR Logging Middleware */
-app.use((req, res, next) => {
-  if (['POST', 'PUT', 'DELETE'].includes(req.method)) {
-    console.log('Incoming CSRF Token:', req.body._csrf);
-    console.log('Session CSRF Token:', req.session.csrfToken);
-  }
-  next();
-});
-
-/* HTTPS LOGGING */
-app.use((req, res, next) => {
-  console.log('Request Protocol:', req.protocol);
-  console.log('X-Forwarded-Proto:', req.headers['x-forwarded-proto']);
-  next();
-});
 
 /* SERVE STATIC ASSETS FROM THE 'public' DIRECTORY */
 app.use(express.static('public', { index: false, dotfiles: 'ignore' }));
