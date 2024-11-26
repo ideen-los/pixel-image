@@ -92,13 +92,6 @@ app.use(
   })
 );
 
-/* CSFR Logging Middleware */
-app.use((req, res, next) => {
-  console.log('Incoming CSRF Token:', req.body._csrf);
-  console.log('Session CSRF Token:', req.session.csrfToken);
-  next();
-});
-
 /* SETUP CSRF PROTECTION */
 app.use(
   lusca({
@@ -115,6 +108,13 @@ app.use(
     xssProtection: true,
   })
 );
+
+/* CSFR Logging Middleware */
+app.use((req, res, next) => {
+  console.log('Incoming CSRF Token:', req.body._csrf);
+  console.log('Session CSRF Token:', req.session.csrfToken);
+  next();
+});
 
 /* SERVE STATIC ASSETS FROM THE 'public' DIRECTORY */
 app.use(express.static('public', { index: false, dotfiles: 'ignore' }));
