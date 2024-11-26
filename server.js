@@ -71,6 +71,13 @@ app.use(express.static('public', { index: false, dotfiles: 'ignore' }));
 /* DEFINE EJS AS RENDER ENGINE */
 app.set('view engine', 'ejs');
 
+// CSFR logging
+app.use((req, res, next) => {
+  console.log('Incoming CSRF Token:', req.body._csrf);
+  console.log('Session CSRF Token:', req.session.csrfToken);
+  next();
+});
+
 /* SETUP COOKIE PARSER FOR CSRF */
 app.use(cookieParser());
 
@@ -119,13 +126,6 @@ app.use(
 // Pass CSRF token to views
 app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
-  next();
-});
-
-// CSFR logging
-app.use((req, res, next) => {
-  console.log('Incoming CSRF Token:', req.body._csrf);
-  console.log('Session CSRF Token:', req.session.csrfToken);
   next();
 });
 
