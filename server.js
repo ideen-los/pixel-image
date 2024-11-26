@@ -30,20 +30,23 @@ const app = express();
 app.disable('x-powered-by');
 // Use helmet to secure Express headers
 app.use(
-  helmet(
-    helmet({
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          scriptSrc: ["'self'"],
-          styleSrc: ["'self'"],
-          imgSrc: ["'self'"],
-          connectSrc: ["'self'"],
-          formAction: ["'self'"],
-        },
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        'default-src': ["'self'"],
+        'form-action': [
+          "'self'",
+          'https://checkout.stripe.com',
+          process.env.NODE_ENV === 'production'
+            ? 'https://www.paypal.com'
+            : 'https://www.sandbox.paypal.com',
+        ],
+        'script-src': ["'self'"],
+        'style-src': ["'self'", "'unsafe-inline'"],
+        'connect-src': ["'self'"],
       },
-    })
-  )
+    },
+  })
 );
 
 // Apply rate limiting to all requests

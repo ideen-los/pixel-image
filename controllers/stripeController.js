@@ -36,7 +36,7 @@ export const createStripeSession = async (req, res) => {
       res.redirect(url);
     }
   } catch (error) {
-    console.error('Error in /pay-stripe route:', error);
+    console.error('Error in /donate route:', error);
 
     return res
       .status(500)
