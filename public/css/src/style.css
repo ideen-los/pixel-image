@@ -391,6 +391,12 @@ main::before {
 
 /* PRO EQUIS Logo
 =============================================================================================== */
+header .pro-equis-logo {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+}
+
 @media (max-width: 1199px) {
   .pro-equis-logo {
     max-width: 600px;
@@ -416,6 +422,16 @@ main::before {
   }
 }
 
+header .pro-equis-logo img {
+  max-width: 80px;
+}
+
+@media (max-width: 1199px) {
+  header .pro-equis-logo img {
+    max-width: 70px;
+  }
+}
+
 .pro-equis-logo span {
   font-size: 0.9rem;
   font-weight: 400;
@@ -430,6 +446,11 @@ main::before {
   .pro-equis-logo span {
     font-size: 0.9rem;
   }
+}
+
+header .pro-equis-logo span {
+  font-size: 0.8rem;
+  text-align: left;
 }
 
 .pro-equis-logo span > span {
