@@ -287,8 +287,29 @@ main::before {
   font-weight: var(--bold);
   text-align: center;
 }
+
+@keyframes pulseAndGlow {
+  0% {
+    transform: scale(0.95);
+    text-shadow: 0 0 20px #2d9da9;
+  }
+
+  70% {
+    transform: scale(1);
+    text-shadow: 0 0 30px #34b3c1, 0 0 10px #4dbbc7;
+  }
+
+  100% {
+    transform: scale(0.95);
+    text-shadow: 0 0 20px #2d9da9;
+  }
+}
+
 .completed .counter-label {
   color: #51d88c;
+  transform: scale(1);
+  animation: pulseAndGlow 2s infinite;
+  will-change: transform;
 }
 
 .meter {

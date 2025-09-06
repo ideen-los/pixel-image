@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const getProgress = parseFloat(window.pixelsRevealed);
   const wrapperWidth = wrapper.offsetWidth;
-  const targetWidth = (getProgress / 1000000) * wrapperWidth; // Adjust denominator based on your scaling
+  const targetWidth = (getProgress / 100000) * wrapperWidth; // Adjust denominator based on your scaling
 
   // Animate the progress bar based on time
   const animationDuration = 3700; // Duration in milliseconds

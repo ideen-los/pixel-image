@@ -11,7 +11,7 @@ export const displayOrdersFromDatabase = async function (req, res) {
       where: {
         status: 'completed', // Fetch only orders with the status 'completed'
       },
-      order: [['amount', 'DESC']],
+      order: [['updatedAt', 'DESC']],
       raw: true,
     });
 
@@ -30,12 +30,12 @@ export const displayOrdersFromDatabase = async function (req, res) {
       },
     });
 
-    // Check if donated amount is available or above 1.000.000
+    // Check if donated amount is available or above 100.000
     let cappedPixelsToReveal;
     if (!totalDonations) {
       cappedPixelsToReveal = 0;
-    } else if (totalDonations > 1000000) {
-      cappedPixelsToReveal = 1000000;
+    } else if (totalDonations > 100000) {
+      cappedPixelsToReveal = 100000;
     } else {
       cappedPixelsToReveal = totalDonations;
     }
